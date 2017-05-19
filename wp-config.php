@@ -31,7 +31,15 @@ if( $_SERVER[ 'SERVER_NAME' ] === 'rjrstudios.dev' ) :
 	define('WP_SITEURL', 'http://rjrstudios.dev/');
 	define('WP_DEBUG', true);
 else :
-
+	define('DB_NAME', 'rjrstudi_wptest');
+	define('DB_USER', 'rjrstudi_zan79');
+	define('DB_PASSWORD', 'K$}4B=~a3gvx');
+	define('DB_HOST', 'localhost');
+	define('DB_CHARSET', 'utf8mb4');
+	define('DB_COLLATE', '');
+	define('WP_HOME', 'http://www.rjrstudios.co.uk/');
+	define('WP_SITEURL', 'http://www.rjrstudios.co.uk/');
+	define('WP_DEBUG', false);
 
 endif;
 
