@@ -63,6 +63,7 @@ Thumbs.db
 *.log
 *.sql
 *.sqlite
+*.json
 
 # ignore compiled files
 *.com
@@ -105,5 +106,3 @@ wp-content/themes/index.php
 wp-content/plugins/index.php
 wp-content/mu-plugins/local-by-flywheel-demo-urls.php
 flywheel-local_prep.sh
-
-rjrstudios-latest-tweet.json
