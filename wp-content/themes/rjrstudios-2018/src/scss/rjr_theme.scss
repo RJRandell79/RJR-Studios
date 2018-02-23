@@ -1,0 +1,95 @@
+/**
+* CH01 - Resets, Imports & Mixins
+* CH02 - Typography
+* CH03 - Page Structure
+* CH04 - Header & Navigation
+* CH05 - Content & Media
+* CH06 - Footer
+* CH07 - Miscellaneous
+* CH08 - Responsive Breakpoints
+**/
+
+
+/* -- CH01 - Resets & Mixins -- */
+@import 'partials/reset';
+@import 'partials/mixins';
+@import 'font-awesome';
+
+/* -- CH02 - Typography -- */
+/*
+@font-face {
+	font-family: 'Bango';
+	src:	url( '../fonts/bango-webfont.eot' );
+	src: 	url( '../fonts/bango-webfont.eot' ) format( 'embedded-opentype' ),
+			url( '../fonts/bango-webfont.woff' ) format( 'woff' ),
+			url( '../fonts/bango-webfont.ttf' ) format( 'truetype' ),
+			url( '../fonts/bango-webfont.svg' ) format( 'svg' );
+}
+*/
+
+* {
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility !important;
+	-webkit-font-smoothing: antialiased !important;
+}
+
+body {
+    @include font-size( 12 );
+    @include breakpoint( small ) {
+        -webkit-text-size-adjust: 100%;
+    }
+	overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: $montserrat;
+	font-weight: 700;
+	text-transform: uppercase;
+	color: rgba(0, 0, 0, 0.72);
+	letter-spacing: 0.8px;
+	width: 100%;
+}
+
+/* -- CH03 - Page Structure -- */
+
+/* -- CH04 - Header & Navigation -- */
+
+/* -- CH05 - Content & Media -- */
+
+/* -- CH06 - Footer -- */
+
+/* -- CH07 - Miscellaneous -- */
+
+/* -- CH08 - Responsive Breakpoints -- */
+@media only screen and (max-width: 1700px) {
+
+}
+
+@media only screen and (max-width: 1200px) {
+
+}
+
+@media only screen and (max-width: 991px) {
+
+}
+
+@media only screen and (max-width: 767px) {
+
+}
+
+@media only screen and (max-width: 600px) {
+
+}
+
+@media only screen and (max-width: 479px) {
+
+}
+
+@media only screen and (max-width: 410px) {
+
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+
+}

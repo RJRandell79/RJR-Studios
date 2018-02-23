@@ -1,0 +1,294 @@
+// Spinning Icons
+// --------------------------
+
+.#{$fa-css-prefix}-spin {
+    -webkit-animation: fa-spin 2s infinite linear;
+            animation: fa-spin 2s infinite linear;
+}
+
+.#{$fa-css-prefix}-bee {
+    -webkit-animation: fa-bee-hover 3s infinite;
+            animation: fa-bee-hover 3s infinite;
+}
+
+.#{$fa-css-prefix}-pulse {
+    -webkit-animation: fa-spin 1s infinite steps(8);
+            animation: fa-spin 1s infinite steps(8);
+}
+
+.#{$fa-css-prefix}-pulsedown {
+    -webkit-animation: fa-pulsedown 3s infinite;
+            animation: fa-pulsedown 3s infinite;
+}
+
+.#{$fa-css-prefix}-heartbeating {
+    -webkit-animaton: fa-heartbeat 3s infinite;
+           animation: fa-heartbeat 3s infinite;
+}
+
+.#{$fa-css-prefix}-music {
+    -webkit-animaton: fa-music 2s infinite;
+           animation: fa-music 2s infinite;
+}
+
+.#{$fa-css-prefix}-aeroplane {
+    -webkit-animaton: fa-aeroplane 5s infinite;
+           animation: fa-aeroplane 5s infinite;
+}
+
+.#{$fa-css-prefix}-witch {
+    -webkit-animaton: fa-witch 5s infinite;
+           animation: fa-witch 5s infinite;
+}
+
+.#{$fa-css-prefix}-teddy {
+    -webkit-animaton: fa-teddy 3s infinite;
+           animation: fa-teddy 3s infinite;
+}
+
+.#{$fa-css-prefix}-wave {
+    -webkit-animaton: fa-wave 3s infinite;
+           animation: fa-wave 3s infinite;
+}
+
+@-webkit-keyframes fa-wave {
+    0%, 100% {
+        -webkit-transform: rotate( 0 );
+                transform: rotate( 0 );
+    }
+    25% {
+        -webkit-transform: rotate( -7deg );
+                transform: rotate( -7deg );
+    }
+    50% {
+        -webkit-transform: rotate( -2deg );
+                transform: rotate( -2deg );
+    }
+    75% {
+        -webkit-transform: rotate( -7deg );
+                transform: rotate( -7deg );
+    }
+}
+
+@keyframes fa-wave {
+    0%, 100% {
+        -webkit-transform: rotate( 0 );
+                transform: rotate( 0 );
+    }
+    25% {
+        -webkit-transform: rotate( -7deg );
+                transform: rotate( -7deg );
+    }
+    50% {
+        -webkit-transform: rotate( -2deg );
+                transform: rotate( -2deg );
+    }
+    75% {
+        -webkit-transform: rotate( -7deg );
+                transform: rotate( -7deg );
+    }
+}
+
+
+@-webkit-keyframes fa-teddy {
+    0%, 100% {
+        -webkit-transform: rotate( 0 );
+                transform: rotate( 0 );
+    }
+    50% {
+        -webkit-transform: rotate( -7deg );
+                transform: rotate( -7deg );
+    }
+}
+
+@keyframes fa-teddy {
+    0%, 100% {
+        -webkit-transform: rotate( 0 );
+                transform: rotate( 0 );
+    }
+    50% {
+        -webkit-transform: rotate( -7deg );
+                transform: rotate( -7deg );
+    }
+}
+
+@-webkit-keyframes fa-witch {
+    0%, 100% {
+        -webkit-transform: rotate( 0 );
+                transform: rotate( 0 );
+    }
+    50% {
+        -webkit-transform: rotate( 7deg );
+                transform: rotate( 7deg );
+    }
+}
+
+@keyframes fa-witch {
+    0%, 100% {
+        -webkit-transform: rotate( 0 );
+                transform: rotate( 0 );
+    }
+    50% {
+        -webkit-transform: rotate( 7deg );
+                transform: rotate( 7deg );
+    }
+}
+
+@-webkit-keyframes fa-aeroplane {
+    0% {
+        -webkit-transform: translate( 0, 0 );
+                transform: translate( 0, 0 );
+    }
+    33% {
+        -webkit-transform: translate( 5px, 5px );
+                transform: translate( 5px, 5px );
+    }
+    66% {
+        -webkit-transform: translate( 10px, 0 );
+                transform: translate( 10px, 0 );
+    }
+}
+
+@keyframes fa-aeroplane {
+    0% {
+        -webkit-transform: translate( 0, 0 );
+                transform: translate( 0, 0 );
+    }
+    33% {
+        -webkit-transform: translate( 5px, 5px );
+                transform: translate( 5px, 5px );
+    }
+    66% {
+        -webkit-transform: translate( 10px, 0 );
+                transform: translate( 10px, 0 );
+    }
+}
+
+
+@-webkit-keyframes fa-music {
+    0% {
+        -webkit-transform: scale( 1, 1 );
+                transform: scale( 1, 1 );
+    }
+    50% {
+        -webkit-transform: scale( 0.9, 1.15 );
+                transform: scale( 0.9, 1.15 );
+    }
+    100% {
+        -webkit-transform: scale( 1, 1 );
+                transform: scale( 1, 1 );
+    }
+}
+
+@keyframes fa-music {
+    0% {
+        -webkit-transform: scale( 1, 1 );
+                transform: scale( 1, 1 );
+    }
+    50% {
+        -webkit-transform: scale( 0.9, 1.15 );
+                transform: scale( 0.9, 1.15 );
+    }
+    100% {
+        -webkit-transform: scale( 1, 1 );
+                transform: scale( 1, 1 );
+    }
+}
+
+@-webkit-keyframes fa-bee-hover {
+    0%, 100% {
+        -webkit-transform: translate( 0, 0 );
+                transform: translate( 0, 0 );
+    }
+    50% {
+        -webkit-transform: translate( 5px, 5px );
+                transform: translate( 5px, 5px );
+    }
+
+}
+
+@keyframes fa-bee-hover {
+    0%, 100% {
+        -webkit-transform: translate( 0, 0 );
+                transform: translate( 0, 0 );
+    }
+    50% {
+        -webkit-transform: translate( 5px, 5px );
+                transform: translate( 5px, 5px );
+    }
+
+}
+
+@-webkit-keyframes fa-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+            transform: rotate(359deg);
+  }
+}
+
+@keyframes fa-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+            transform: rotate(359deg);
+  }
+}
+
+@-webkit-keyframes fa-pulsedown {
+    0%, 100% {
+        -webkit-transform: translate( 0, 0 );
+                transform: translate( 0, 0 );
+    }
+    50% {
+        -webkit-transform: translate( 0, 10 );
+                transform: translate( 0, 10 );
+    }
+}
+
+@keyframes fa-pulsedown {
+    0%, 100% {
+        -webkit-transform: translateY( 0 );
+                transform: translateY( 0 );
+    }
+    50% {
+        -webkit-transform: translateY( 10px );
+                transform: translateY( 10px );
+    }
+}
+
+@-webkit-keyframes fa-heartbeat {
+    0% {
+        -webkit-transform: scale( 1, 1 );
+                transform: scale( 1, 1 );
+    }
+    50% {
+        -webkit-transform: scale( 1.1, 1.1 );
+                transform: scale( 1.1, 1.1 );
+    }
+    100% {
+        -webkit-transform: scale( 1, 1 );
+                transform: scale( 1, 1 );
+    }
+}
+
+@keyframes fa-heartbeat {
+    0% {
+        -webkit-transform: scale( 1, 1 );
+                transform: scale( 1, 1 );
+    }
+    50% {
+        -webkit-transform: scale( 1.2, 1.2 );
+                transform: scale( 1.2, 1.2 );
+    }
+    100% {
+        -webkit-transform: scale( 1, 1 );
+                transform: scale( 1, 1 );
+    }
+}

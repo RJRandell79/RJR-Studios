@@ -10,7 +10,7 @@ require_once 'includes/htaccess.php';
  * Text Domain: brute-force-login-protection
  * Author: Fresh-Media
  * Author URI: http://fresh-media.nl/
- * Version: 1.5.2
+ * Version: 1.5.3
  * License: GPL2
  * 
  * Copyright 2014  Fresh-Media
@@ -507,7 +507,7 @@ class BruteForceLoginProtection {
      * @return void
      */
     private function __showMessage($message) {
-        echo '<div class="updated"><p>' . $message . '</p></div>';
+        echo '<div class="updated"><p>' . esc_html($message) . '</p></div>';
     }
 
     /**
@@ -517,7 +517,7 @@ class BruteForceLoginProtection {
      * @return void
      */
     private function __showError($message) {
-        echo '<div class="error"><p>' . $message . '</p></div>';
+        echo '<div class="error"><p>' . esc_html($message) . '</p></div>';
     }
 
 }
