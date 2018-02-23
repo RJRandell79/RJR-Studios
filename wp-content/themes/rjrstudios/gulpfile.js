@@ -10,7 +10,7 @@ var gulp = require( 'gulp' ),
 	cleanCss = require( 'gulp-cleancss' ),
 	del = require( 'del' ),
 	imgMin = require( 'gulp-imagemin' ),
-	ignore = require( 'gulp-ignore' ),
+	//ignore = require( 'gulp-ignore' ),
 	gutil = require( 'gulp-util' );
 
 // Concatenate all js first

@@ -4,7 +4,8 @@
 
 function theme_styles() {
     global $wp_styles;
-	wp_enqueue_style( 'theme_css', get_template_directory_uri() . '/dist/css/rjr_theme.min.css' );
+    wp_enqueue_style( 'bootstrap_css', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' );
+	wp_enqueue_style( 'theme_css', get_template_directory_uri() . '/dist/css/rjr_theme.min.css', array( 'bootstrap_css' ) );
  	wp_enqueue_style( 'css_ie', get_template_directory_uri() . '/dist/css/ie_theme.min.css', array( 'theme_css' ) );
   	$wp_styles->add_data( 'css_ie', 'conditional', 'gte IE 9' );
 }
@@ -31,7 +32,7 @@ function theme_js() {
 	wp_register_script( 'respond_js', 'https://oss.maxcdn.com/respond/1.4.2/respond.min.js', '', '', false );
 	$wp_scripts->add_data( 'html5_shiv', 'conditional', 'lt IE 9' );
 	$wp_scripts->add_data( 'respond_js', 'conditional', 'lt IE 9' );
-	
+
 }
 add_action('wp_enqueue_scripts', 'theme_js');
 
@@ -83,8 +84,8 @@ if ( function_exists( 'register_sidebar' ) ) {
 /* -- Custom Post Types -- */
 
 function register_cpt_projects() {
-  
-    $labels = array( 
+
+    $labels = array(
         'name' => _x( 'Projects', 'projects' ),
         'singular_name' => _x( 'Project', 'projects' ),
         'add_new' => _x( 'Add New Project', 'projects' ),
@@ -99,7 +100,7 @@ function register_cpt_projects() {
         'menu_name' => _x( 'Projects', 'projects' ),
     );
 
-    $args = array( 
+    $args = array(
         'labels' => $labels,
         'hierarchical' => true,
         'supports' => array( 'title', 'editor', 'thumbnail' ),
@@ -122,8 +123,8 @@ function register_cpt_projects() {
 add_action( 'init', 'register_cpt_projects' );
 
 function register_cpt_services() {
-  
-    $labels = array( 
+
+    $labels = array(
         'name' => _x( 'Services', 'services' ),
         'singular_name' => _x( 'Service', 'services' ),
         'add_new' => _x( 'Add New Service', 'services' ),
@@ -138,7 +139,7 @@ function register_cpt_services() {
         'menu_name' => _x( 'Services', 'services' ),
     );
 
-    $args = array( 
+    $args = array(
         'labels' => $labels,
         'hierarchical' => true,
         'supports' => array( 'title', 'editor', 'thumbnail' ),
@@ -170,7 +171,7 @@ function taxonomies_projects() {
         'all_items' => __( 'All Project Categories' ),
         'parent_item' => __( 'Parent Project Category' ),
         'parent_item_colon' => __( 'Parent Project Category:' ),
-        'edit_item' => __( 'Edit Project Category' ), 
+        'edit_item' => __( 'Edit Project Category' ),
         'update_item' => __( 'Update Project Category' ),
         'add_new_item' => __( 'Add New Project Category' ),
         'new_item_name' => __( 'New Prject Category' ),
@@ -190,7 +191,7 @@ add_action( 'init', 'taxonomies_projects', 0 );
 function display_cpt_tags( $query ) {
 
     if( is_tag() && $query->is_main_query() ) {
-        
+
         $post_types = get_post_types();
         $query->set( 'post_type', $post_types );
     }
@@ -202,7 +203,7 @@ add_filter( 'pre_get_posts', 'display_cpt_tags' );
 function html5wp_pagination() {
 
     global $wp_query;
-    
+
     $big = 999999999;
 
     echo paginate_links( array(
@@ -280,7 +281,7 @@ function theme_settings_page() { ?>
         </form>
     </div>
 
-<?php 
+<?php
 }
 
 function register_sections_settings() {
@@ -304,11 +305,11 @@ add_action( 'admin_menu', 'add_theme_menu_item' );
 
 function js_async_attr( $tag ) {
     $scripts_to_exclude = array( 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js', 'modernizr-custom.min.js' );
- 
+
     foreach( $scripts_to_exclude as $exclude_script ) {
         if( true == strpos( $tag, $exclude_script ) )
-        
-        return $tag;    
+
+        return $tag;
     }
     return str_replace( ' src', ' async="async" src', $tag );
 }

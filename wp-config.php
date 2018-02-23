@@ -20,15 +20,15 @@
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-if( $_SERVER[ 'SERVER_NAME' ] === 'rjrstudios.dev' ) :
+if( $_SERVER[ 'SERVER_NAME' ] === 'rjrstudios.local' ) :
 	define('DB_NAME', 'rjrstudios');
 	define('DB_USER', 'root');
 	define('DB_PASSWORD', 'root');
 	define('DB_HOST', 'localhost');
 	define('DB_CHARSET', 'utf8mb4');
 	define('DB_COLLATE', '');
-	define('WP_HOME', 'http://rjrstudios.dev/');
-	define('WP_SITEURL', 'http://rjrstudios.dev/');
+	define('WP_HOME', 'http://rjrstudios.local/');
+	define('WP_SITEURL', 'http://rjrstudios.local/');
 	define('WP_DEBUG', true);
 else :
 	define('DB_NAME', 'rjrstudi_wptest');
