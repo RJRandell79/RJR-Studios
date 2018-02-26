@@ -12,9 +12,18 @@
     </head>
 
     <body <?php body_class(); ?> >
+
+    <div class="header cover-container d-flex h-100 mx-auto flex-column">
+        <header class="container masthead">
+            <div class="inner clearfix">
+                <h3 class="masthead-brand">Cover</h3>
+                <nav class="nav nav-masthead justify-content-center">
+                    <a class="nav-link active" href="#">Home</a>
+                    <a class="nav-link" href="#">Features</a>
+                    <a class="nav-link" href="#">Contact</a>
+                </nav>
+            </div>
+        </header>
+    </div>
+
     <!-- /End of header.php -->
-
-    <header>
-
-        
-    </header>

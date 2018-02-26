@@ -2,11 +2,9 @@
 <!-- This is the footer.php -->
 <?php $analytics = get_option( 'analytics' ); ?>
 
-<footer class="container-fluid">
+<footer class="footer container-fluid">
 	<div class="container">
-
-
-
+		<p>&copy;<?php echo date( 'Y' ); ?>&nbsp;Rob Randell.</p>
 	</div>
 
 	<?php wp_footer(); ?>

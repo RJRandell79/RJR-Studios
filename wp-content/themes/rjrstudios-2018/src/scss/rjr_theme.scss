@@ -11,7 +11,6 @@
 
 
 /* -- CH01 - Resets & Mixins -- */
-@import 'partials/reset';
 @import 'partials/mixins';
 @import 'font-awesome';
 
@@ -35,29 +34,145 @@
 }
 
 body {
-    @include font-size( 12 );
+	font-family: $opensans;
+	font-weight: $regular;
+	color: $black;
+    @include font-size( 16 );
     @include breakpoint( small ) {
         -webkit-text-size-adjust: 100%;
     }
 	overflow-x: hidden;
 }
 
+/* Selection colours */
+::-moz-selection {
+	background: lighten( $black, 30% );
+	text-shadow: none;
+}
+
+::selection {
+	background: lighten( $black, 30% );
+	text-shadow: none;
+}
+img { display: block; }
+img::selection { background: transparent; }
+img::-moz-selection	{ background: transparent; }
+
+.fa { font-family: $fontawesome; }
+
+p {
+	@include font-size( 14 );
+	line-height: 1.3rem;
+	color: $black;
+	margin: 0 0 10px;
+	> a {
+		color: #888;
+		@include transition( all, .33s ease-in-out );
+		padding: 0;
+		margin: 0;
+		&:hover {
+			color: #444;
+		}
+	}
+	> b, > strong {
+		font-weight: $bold;
+	}
+}
+
 h1, h2, h3, h4, h5, h6 {
-	font-family: $montserrat;
-	font-weight: 700;
-	text-transform: uppercase;
-	color: rgba(0, 0, 0, 0.72);
-	letter-spacing: 0.8px;
-	width: 100%;
+	font-family: $opensans;
+	font-weight: $extrabold;
+}
+h1 { @include font-size( 36 ); }
+h2 { @include font-size( 30 ); line-height: 2.25rem; }
+h3 { @include font-size( 21 ); }
+h4 { @include font-size( 18 ); }
+h5 { @include font-size( 16 ); }
+h6 { @include font-size( 14 ); }
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+	li {
+		@include font-size( 14 );
+		&:before {
+			position: relative;
+			top: -2px;
+			content: "\f111";
+			font-family: $fontawesome;
+			font-size: 8px;
+			font-size: .5rem;
+			color: #CCC;
+			margin: 0 15px 0 0;
+		}
+		ul {
+			padding: 0 0 10px 22px;
+			li {
+				&:before {
+					content: "\f10c";
+				}
+			}
+		}
+	}
+}
+
+blockquote {
+	padding: 10px 20px;
+	background: #CCC;
+	@include border-radius( 5px );
+	p {
+		margin: 0;
+		font-style: italic;
+	}
 }
 
 /* -- CH03 - Page Structure -- */
 
 /* -- CH04 - Header & Navigation -- */
+.header {
+	background: #333;
+	.masthead {
+		.inner {
+			.masthead-brand {
+				float: left;
+				margin: 2px 0;
+				padding: .5rem 1rem;
+				@include font-size( 16 );
+				color: $white;
+			}
+			.nav-masthead {
+				float: right;
+				> a {
+					margin: 0 0 2px;
+					color: #CCC;
+					text-transform: uppercase;
+					border-top: 2px solid transparent;
+					@include transition( all, .33s ease-in-out );
+					&:hover, &.active {
+						color: $white;
+						border-top-color: $white;
+					}
+				}
+			}
+		}
+	}
+}
+
+
 
 /* -- CH05 - Content & Media -- */
 
 /* -- CH06 - Footer -- */
+.footer {
+	background: #333;
+	p {
+		margin: 0;
+		padding: .5rem 1rem;
+		color: $white;
+		@include font-size( 12 );
+	}
+}
 
 /* -- CH07 - Miscellaneous -- */
 

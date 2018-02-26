@@ -5,12 +5,12 @@
 function theme_styles() {
     //global $wp_styles;
     wp_enqueue_style( 'bootstrap_css', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css', '', null );
-	wp_enqueue_style( 'theme_css', get_template_directory_uri() . '/dist/css/rjr_theme.min.css', array( 'bootstrap_css' ), null );
+	wp_enqueue_style( 'theme_css', get_template_directory_uri() . '/dist/css/rjr_theme.min.css', '', null );
 }
 add_action( 'wp_enqueue_scripts', 'theme_styles' );
 
 function load_fonts() {
-	wp_register_style( 'opensans', 'http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,800,700,300' );
+	wp_register_style( 'opensans', 'http://fonts.googleapis.com/css?family=Open+Sans:300,400italic,400,700,800' );
 	wp_enqueue_style( 'opensans' );
 }
 add_action( 'wp_print_styles', 'load_fonts' );

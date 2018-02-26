@@ -10,71 +10,6 @@
 * CH08 - Responsive Breakpoints
 **/
 /* -- CH01 - Resets & Mixins -- */
-/**
-* CH01 - Resets
-*
-* Resetting and rebuilding styles have been helped along thanks to the fine work of Eric Meyer http://meyerweb.com/eric/tools/css/reset/index.html along with Nicolas Gallagher and Jonathan Neal http://necolas.github.com/normalize.css/ and Blueprint http://www.blueprintcss.org/
-**/
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
-  border: 0;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  font-style: inherit;
-  font-weight: inherit;
-  margin: 0;
-  outline: 0;
-  padding: 0;
-  vertical-align: baseline; }
-
-html {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  font-size: inherit;
-  overflow-y: scroll;
-  -webkit-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
-  /*height: 100%;*/ }
-
-*, *:before, *:after {
-  -webkit-box-sizing: inherit;
-  -moz-box-sizing: inherit;
-  box-sizing: inherit; }
-
-body {
-  background: #FFFFFF;
-  height: 100%; }
-
-article, aside, details, figcaption, figure, footer, header, main, nav, section {
-  display: block; }
-
-ol, ul {
-  list-style: none; }
-
-table {
-  border-collapse: separate;
-  border-spacing: 0; }
-
-caption, th, td {
-  font-weight: normal;
-  text-align: left; }
-
-blockquote:before, blockquote:after, q:before, q:after {
-  content: ""; }
-
-blockquote, q {
-  -webkit-hyphens: none;
-  -moz-hyphens: none;
-  -ms-hyphens: none;
-  hyphens: none;
-  quotes: none; }
-
-a:hover, a:active, a:focus {
-  outline: 0; }
-
-a img {
-  border: 0; }
-
 /*!
  *  Font Awesome 4.6.3 by @davegandy - http://fontawesome.io - @fontawesome
  *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
@@ -2474,25 +2409,155 @@ a img {
   -webkit-font-smoothing: antialiased !important; }
 
 body {
-  font-size: 12px;
-  font-size: 0.75rem;
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  color: #000;
+  font-size: 16px;
+  font-size: 1rem;
   overflow-x: hidden; }
   @media only screen and (max-width: 569px) {
     body {
       -webkit-text-size-adjust: 100%; } }
 
+/* Selection colours */
+::-moz-selection {
+  background: #4d4d4d;
+  text-shadow: none; }
+
+::selection {
+  background: #4d4d4d;
+  text-shadow: none; }
+
+img {
+  display: block; }
+
+img::selection {
+  background: transparent; }
+
+img::-moz-selection {
+  background: transparent; }
+
+.fa {
+  font-family: "FontAwesome"; }
+
+p {
+  font-size: 14px;
+  font-size: 0.875rem;
+  line-height: 1.3rem;
+  color: #000;
+  margin: 0 0 10px; }
+  p > a {
+    color: #888;
+    -webkit-transition: all, 0.33s ease-in-out;
+    -moz-transition: all, 0.33s ease-in-out;
+    -ms-transition: all, 0.33s ease-in-out;
+    -o-transition: all, 0.33s ease-in-out;
+    transition: all, 0.33s ease-in-out;
+    padding: 0;
+    margin: 0; }
+    p > a:hover {
+      color: #444; }
+  p > b, p > strong {
+    font-weight: 700; }
+
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.72);
-  letter-spacing: 0.8px;
-  width: 100%; }
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 800; }
+
+h1 {
+  font-size: 36px;
+  font-size: 2.25rem; }
+
+h2 {
+  font-size: 30px;
+  font-size: 1.875rem;
+  line-height: 2.25rem; }
+
+h3 {
+  font-size: 21px;
+  font-size: 1.3125rem; }
+
+h4 {
+  font-size: 18px;
+  font-size: 1.125rem; }
+
+h5 {
+  font-size: 16px;
+  font-size: 1rem; }
+
+h6 {
+  font-size: 14px;
+  font-size: 0.875rem; }
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0; }
+  ul li {
+    font-size: 14px;
+    font-size: 0.875rem; }
+    ul li:before {
+      position: relative;
+      top: -2px;
+      content: "\f111";
+      font-family: "FontAwesome";
+      font-size: 8px;
+      font-size: .5rem;
+      color: #CCC;
+      margin: 0 15px 0 0; }
+    ul li ul {
+      padding: 0 0 10px 22px; }
+      ul li ul li:before {
+        content: "\f10c"; }
+
+blockquote {
+  padding: 10px 20px;
+  background: #CCC;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px; }
+  blockquote p {
+    margin: 0;
+    font-style: italic; }
 
 /* -- CH03 - Page Structure -- */
 /* -- CH04 - Header & Navigation -- */
+.header {
+  background: #333; }
+  .header .masthead .inner .masthead-brand {
+    float: left;
+    margin: 2px 0;
+    padding: .5rem 1rem;
+    font-size: 16px;
+    font-size: 1rem;
+    color: #FFF; }
+  .header .masthead .inner .nav-masthead {
+    float: right; }
+    .header .masthead .inner .nav-masthead > a {
+      margin: 0 0 2px;
+      color: #CCC;
+      text-transform: uppercase;
+      border-top: 2px solid transparent;
+      -webkit-transition: all, 0.33s ease-in-out;
+      -moz-transition: all, 0.33s ease-in-out;
+      -ms-transition: all, 0.33s ease-in-out;
+      -o-transition: all, 0.33s ease-in-out;
+      transition: all, 0.33s ease-in-out; }
+      .header .masthead .inner .nav-masthead > a:hover, .header .masthead .inner .nav-masthead > a.active {
+        color: #FFF;
+        border-top-color: #FFF; }
+
 /* -- CH05 - Content & Media -- */
 /* -- CH06 - Footer -- */
+.footer {
+  background: #333; }
+  .footer p {
+    margin: 0;
+    padding: .5rem 1rem;
+    color: #FFF;
+    font-size: 12px;
+    font-size: 0.75rem; }
+
 /* -- CH07 - Miscellaneous -- */
 /* -- CH08 - Responsive Breakpoints -- */
 

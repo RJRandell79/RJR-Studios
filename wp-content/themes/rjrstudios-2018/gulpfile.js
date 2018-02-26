@@ -34,7 +34,7 @@ gulp.task('minifyScripts', ['concatScripts'], function(){
 
 // Compile SASS files
 gulp.task('compileSass', function(){
-	return gulp.src('./src/scss/*.scss')
+	return gulp.src('./src/scss/rjr_theme.scss')
 	.pipe(maps.init())
 	.pipe(sass())
 	.pipe(maps.write('./'))
@@ -43,7 +43,7 @@ gulp.task('compileSass', function(){
 
 // Minify the compiled CSS file created in the task above!
 gulp.task('minifyStyles', ['compileSass'], function(){
-	return gulp.src('dist/css/*.css')
+	return gulp.src('dist/css/rjr_theme.css')
 	.pipe(cleanCss({compatibility: 'ie8'}))
 	.pipe(rename('rjr_theme.min.css'))
 	.pipe(gulp.dest('dist/css'));
