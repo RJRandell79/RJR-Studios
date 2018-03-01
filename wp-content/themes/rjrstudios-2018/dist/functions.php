@@ -5,6 +5,12 @@
 function theme_styles() {
     //global $wp_styles;
     wp_enqueue_style( 'bootstrap_css', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css', '', null );
+
+    if( is_singular( 'projects' ) ) :
+        wp_enqueue_style( 'owl_carousel_css', get_template_directory_uri() . '/dist/css/owl.carousel.min.css', '', null );
+        wp_enqueue_style( 'fancybox_css', get_template_directory_uri() . '/dist/css/jquery.fancybox.min.css', '', null );
+    endif;
+
 	wp_enqueue_style( 'theme_css', get_template_directory_uri() . '/dist/css/rjr_theme.min.css', '', null );
 }
 add_action( 'wp_enqueue_scripts', 'theme_styles' );
@@ -21,6 +27,13 @@ function theme_js() {
     wp_deregister_script( 'jquery' );
     wp_register_script( 'jquery', 'https://code.jquery.com/jquery-3.2.1.min.js', '', null, true );
     wp_enqueue_script( 'jquery' );
+
+    if( is_singular( 'projects' ) ) :
+        wp_enqueue_script( 'owl_carousel_js', get_template_directory_uri() . '/dist/js/owl.carousel.min.js', array( 'jquery' ), '', true );
+        wp_enqueue_script( 'fancybox_css', get_template_directory_uri() . '/dist/js/jquery.fancybox.min.js', array( 'jquery' ), '', true );
+    endif;
+
+    wp_enqueue_script( 'lozad_js', 'https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js', '', null, true );
 
     wp_enqueue_script( 'bootstrap_js', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js', array( 'jquery' ), '', true );
     wp_enqueue_script( 'theme_rjr_js', get_template_directory_uri() . '/dist/js/rjr_theme.min.js', array( 'jquery', 'bootstrap_js' ), '', true );
@@ -183,6 +196,37 @@ function taxonomies_projects() {
 add_action( 'init', 'taxonomies_projects', 0 );
 
 /* -- Bespoke functions -- */
+function fancy_title( $str ) {
+    $arr = explode( ' ', $str );
+    $len = count( $arr );
+    $html = '';
+    $remaining = '';
+
+    if( $len == 1 ) :
+        $html = '<h1><span class="light-font">' . $arr[ 0 ] . '</span></h1>';
+    elseif( $len == 2 ) :
+        $html = '<h1><span class="light-font">' . $arr[ 0 ] . '</span> <span class="primary-col">' . $arr[ 1 ] . '</span></h1>';
+    elseif( $len == 3 ) :
+        $html = '<h1><span class="light-font">' . $arr[ 0 ] . ' ' . $arr[ 1 ] . '</span><br /><span class="primary-col">' . $arr[ 2 ] . '</span></h1>';
+    else :
+        for( $x = 4; $x < $len; $x++ ) :
+            $remaining .= $arr[ $x ] . ' ';
+        endfor;
+        $html = '<h1><span class="light-font">' . $arr[ 0 ] . ' ' . $arr[ 1 ] . '</span><br />' . $arr[ 2 ] . ' <span class="primary-col">' .  $arr[ 3 ] . ' ' . $remaining . '</span></h1>';
+    endif;
+
+    return $html;
+}
+
+function get_images( $postid ) {
+    $img_id = get_post_thumbnail_id( $postid );
+    $img_src = wp_get_attachment_image_src( $img_id, 'full' );
+    $img_srcset = wp_get_attachment_image_srcset( $img_id, 'full' );
+    $img_alt = get_post_meta( $img_id, '_wp_attachment_image_alt', true );
+
+    return array( esc_url( $img_src[ 0 ] ), esc_attr( $img_srcset ), $img_alt );
+}
+
 function international_number_link( $number, $country = 'uk' ) { // Adds international dialling prefix for GB unless country value is overidden
     $codes = array( 'austria' => 43, 'belgium' => 32, 'bulgaria' => 359, 'croatia' => 385, 'cyprus' => 357, 'czech' => 420, 'denmark' => 45, 'estonia' => 372, 'finland' => 358, 'france' => 33, 'gibraltar' => 350, 'germany' => 49, 'greece' => 30, 'hungary' => 36, 'iceland' => 354, 'ireland' => 353, 'italy' => 39, 'lativa' => 371, 'liechtenstein' => 423, 'lithuania' => 370, 'luxembourg' => 352, 'malta' => 356, 'netherlands' => 31, 'norway' => 47, 'poland' => 48, 'portugal' => 351, 'romania' => 40, 'slovakia' => 421, 'spain' => 34, 'sweden' => 46, 'uk' => 44 );
     $prefix = $codes[ $country ];

@@ -13,14 +13,25 @@
 
     <body <?php body_class(); ?> >
 
-    <div class="header cover-container d-flex h-100 mx-auto flex-column">
+    <div id="top-section" class="header cover-container d-flex h-100 mx-auto flex-column">
         <header class="container masthead">
             <div class="inner clearfix">
                 <h3 class="masthead-brand">Cover</h3>
                 <nav class="nav nav-masthead justify-content-center">
-                    <a class="nav-link active" href="#">Home</a>
-                    <a class="nav-link" href="#">Features</a>
-                    <a class="nav-link" href="#">Contact</a>
+                    <a class="nav-link" href="<?php bloginfo( 'url' ); ?>">Home</a>
+                    <?php if( is_front_page() ) : ?>
+                    <a id="about" class="jumpto nav-link" href="#">About</a>
+                    <a id="services" class="jumpto nav-link" href="#">Services</a>
+                    <a id="portfolio" class="jumpto nav-link" href="#">Portfolio</a>
+                    <a id="blog" class="jumpto nav-link" href="#">Blog</a>
+                    <a id="contact" class="jumpto nav-link" href="#">Contact</a>
+                    <?php else : ?>
+                    <a class="jumpto nav-link" href="<?php bloginfo( 'url' ); ?>#about-section">About</a>
+                    <a class="jumpto nav-link" href="<?php bloginfo( 'url' ); ?>#services-section">Services</a>
+                    <a class="jumpto nav-link" href="<?php bloginfo( 'url' ); ?>#portfolio-section">Portfolio</a>
+                    <a class="jumpto nav-link" href="<?php bloginfo( 'url' ); ?>#blog-section">Blog</a>
+                    <a class="jumpto nav-link" href="<?php bloginfo( 'url' ); ?>#contact-section">Contact</a>
+                    <?php endif; ?>
                 </nav>
             </div>
         </header>

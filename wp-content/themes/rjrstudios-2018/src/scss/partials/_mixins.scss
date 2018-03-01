@@ -69,6 +69,12 @@ $black50: rgba( 0, 0, 0, 0.50 );
 $black75: rgba( 0, 0, 0, 0.75 );
 $black: #000;
 
+$primary: #EE7059;
+$darkgrey: #424242;
+$lightgrey: #F6F6F6;
+
+$primaryhover: lighten( $primary, 5% );
+
 $light: 300;
 $regular: 400;
 $bold: 700;

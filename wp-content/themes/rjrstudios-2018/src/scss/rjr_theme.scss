@@ -46,12 +46,12 @@ body {
 
 /* Selection colours */
 ::-moz-selection {
-	background: lighten( $black, 30% );
+	background: lighten( $primary, 30% );
 	text-shadow: none;
 }
 
 ::selection {
-	background: lighten( $black, 30% );
+	background: lighten( $primary, 30% );
 	text-shadow: none;
 }
 img { display: block; }
@@ -66,10 +66,11 @@ p {
 	color: $black;
 	margin: 0 0 10px;
 	> a {
-		color: #888;
+		color: $primary;
 		@include transition( all, .33s ease-in-out );
 		padding: 0;
 		margin: 0;
+		word-break: break-all;
 		&:hover {
 			color: #444;
 		}
@@ -81,7 +82,7 @@ p {
 
 h1, h2, h3, h4, h5, h6 {
 	font-family: $opensans;
-	font-weight: $extrabold;
+	font-weight: $bold;
 }
 h1 { @include font-size( 36 ); }
 h2 { @include font-size( 30 ); line-height: 2.25rem; }
@@ -96,6 +97,7 @@ ul {
     padding: 0;
 	li {
 		@include font-size( 14 );
+		line-height: 1.3rem;
 		&:before {
 			position: relative;
 			top: -2px;
@@ -115,6 +117,67 @@ ul {
 			}
 		}
 	}
+	&.timeline {
+		margin: 20px 0 0;
+		li {
+			position: relative;
+			padding: 0 0 20px 30px;
+			&:before {
+				content: none;
+			}
+			> span {
+				display: block;
+				font-weight: $bold;
+				text-transform: uppercase;
+				&.place {
+					@include font-size( 12 );
+				}
+			}
+			a {
+				color: $primary;
+				@include transition( all, .33s ease-in-out );
+				word-break: break-all;
+				&:hover {
+					color: #444;
+				}
+			}
+			div {
+				display: inline-block;
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 20px;
+				height: 100%;
+				div {
+					position: absolute;
+					top: 5px;
+					left: 9px;
+					width: 12px;
+					height: 12px;
+					margin-left: -5px;
+					background: $primary;
+				}
+				span {
+				    display: block;
+				    width: 1px;
+					height: 100%;
+					margin: 10px auto 0;
+				    background: $primary;
+				}
+			}
+			&:first-of-type {
+				 div {
+					top: 3px;
+				}
+			}
+			&:last-of-type {
+				div span {
+					height: 2px;
+				}
+			}
+		}
+
+	}
 }
 
 blockquote {
@@ -127,7 +190,144 @@ blockquote {
 	}
 }
 
+.btn {
+	display: block;
+	width: 150px;
+	margin: 0 auto;
+	padding: 10px 15px;
+	@include font-size( 14 );
+	color: $white;
+	background: $primary;
+	font-weight: $bold;
+	text-transform: uppercase;
+	border: 0;
+	@include border-radius( 0 );
+	@include transition( all, .33s ease-in-out );
+	&:hover {
+		color: $white;
+		background: $primaryhover;
+	}
+}
+
 /* -- CH03 - Page Structure -- */
+article {
+	position: relative;
+}
+.post-content {
+	.metadata {
+		text-transform: uppercase;
+		span {
+			color: $primary;
+		}
+	}
+	h3 {
+		margin: 2rem 0 0.5rem;
+	}
+	h5 {
+		margin: 1em 0 0.5rem;
+	}
+	img {
+		width: 100%;
+		height: auto;
+		margin: 0 0 30px;
+	}
+	.tags {
+		p, ul, li {
+			float: left;
+		}
+		p, li {
+			margin: 0 5px 0 0;
+			@include font-size( 12 );
+			text-transform: uppercase;
+			&:before {
+				margin: 0;
+				content: '';
+			}
+			a {
+				color: $primary;
+				&:hover {
+					color: #444;
+				}
+			}
+		}
+	}
+}
+.sidebar {
+	h5 {
+		margin: 0 0 15px;
+	}
+	.post-nav {
+		a {
+			&:hover {
+				color: $white;
+			}
+			div {
+				width: 100%;
+				margin: 0 0 10px;
+			}
+		}
+	}
+	ul {
+		margin: 0 0 15px;
+		li {
+			a {
+				color: $primary;
+				@include transition( all, .33s ease-in-out );
+				padding: 0;
+				margin: 0;
+				&:hover {
+					color: #444;
+				}
+			}
+		}
+		&.blogroll, &.taglist {
+			li {
+				margin: 0 0 10px;
+				color: #888;
+				&:before {
+					margin: 0;
+					content: '';
+				}
+				img, div {
+					float: left;
+				}
+				img {
+					width: 50px;
+					height: auto;
+					margin: 0 15px 0 0;
+				}
+				div {
+					width: 200px;
+					h6 {
+						margin: 0;
+						font-weight: $regular;
+					}
+					p {
+						margin: 0;
+						color: #888;
+						@include font-size( 11 );
+						text-transform: uppercase;
+					}
+				}
+			}
+		}
+		&.taglist {
+			li {
+				float: left;
+			    margin: 0 5px 5px 0;
+				a {
+					display: inline-block;
+					width: inherit;
+					padding: 5px 10px;
+					color: $white;
+					@include font-size( 12 );
+					font-weight: $regular;
+				}
+			}
+		}
+	}
+
+}
 
 /* -- CH04 - Header & Navigation -- */
 .header {
@@ -159,22 +359,444 @@ blockquote {
 	}
 }
 
-
-
 /* -- CH05 - Content & Media -- */
+.banner {
+	position: relative;
+	background: $lightgrey;
+	overflow: hidden;
+	div {
+		display: table;
+		width: 60%;
+		padding: 18% 0;
+		h1 {
+			display: table-cell;
+			margin: 0;
+			padding: 0;
+			font-weight: $extrabold;
+			text-transform: uppercase;
+			vertical-align: middle;
+		}
+	}
+	img {
+		position: absolute;
+		top: -25px;
+		right: -5px;
+		left: -5px;
+		width: 110%;
+		height: auto;
+		opacity: 0.4;
+		filter: blur( 3px ) grayscale( 25% );
+	}
+}
+.sidetext {
+	position: absolute;
+	top: 135px;
+	left: -80px;
+	width: 120px;
+	margin: 0;
+	@include font-size( 11 );
+	color: #424242;
+	content: 'This is the sidetext.';
+	transform: rotate(-90deg);
+	text-transform: uppercase;
+	i {
+		margin: 0 5px 0 0;
+		color: $primary;
+	}
+}
+.owl-carousel {
+	position: relative;
+	.owl-stage-outer {
+		width: 100%;
+	}
+	.owl-nav {
+		.owl-prev, .owl-next {
+			position: absolute;
+			top: 50%;
+			margin: -17px 0 0;
+			@include font-size( 24 );
+			color: rgba( 255, 255, 255, 0.75 );
+			text-shadow: 0 0 4px rgba( 0, 0, 60, 0.5 );
+			transition: all 0.2s ease-in;
+			&:hover {
+				color: $primaryhover;
+			}
+		}
+		.owl-prev {
+			left: 15px;
+		}
+		.owl-next {
+			right: 15px;
+		}
+	}
+	.owl-dots {
+		position: absolute;
+		bottom: 5px;
+		width: 100%;
+		text-align: center;
+		.owl-dot {
+			display: inline-block;
+			width: 8px;
+			height: 8px;
+			margin: 0 5px 0 0;
+			background: lighten( $primary, 25% );
+			@include border-radius( 50% );
+			transition: all 0.2s ease-in;
+			&.active {
+				background: $primary;
+			}
+			&:last-of-type {
+				margin: 0;
+			}
+		}
+	}
+}
+
+.about, .resume, .services, .portfolio, .news, .contact {
+	h2 {
+		margin: 0 0 30px;
+		text-align: center;
+		text-transform: uppercase;
+	}
+}
+.about {
+	border-bottom: 2px solid $lightgrey;
+}
+.news, .services {
+	background: $lightgrey;
+}
+
+.skill {
+	margin: 0 0 20px;
+	p {
+		width: 50%;
+		font-weight: $bold;
+		text-transform: uppercase;
+		&:first-of-type {
+			float: left;
+		}
+		&:last-of-type {
+			float: right;
+			text-align: right;
+		}
+	}
+	.gauge {
+		position: relative;
+		width: 100%;
+		height: 5px;
+		background: $lightgrey;
+		.amount {
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 66%;
+			height: 5px;
+			background: $primary;
+		}
+	}
+}
+
+.service {
+	padding: 15px;
+	@include transition( all, .33s ease-in-out );
+	i, p {
+		display: block;
+		text-align: center;
+	}
+	p:first-of-type {
+		margin: 10px 0 0;
+		font-weight: $bold;
+		text-transform: uppercase;
+	}
+	&:hover {
+		background: $white;
+		cursor: pointer;
+		i {
+			color: $primary;
+		}
+	}
+}
+
+.portfolio-item {
+	position: relative;
+	width: 100%;
+	height: 200px;
+	margin: 0 0 30px;
+	background: $lightgrey;
+	img {
+		width: 100%;
+		height: 200px;
+		object-fit: cover;
+	}
+	a {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		div {
+			height: 100%;
+			background: rgba( 0, 0, 0, 0.5 );
+			opacity: 0;
+			transition: all 0.3s ease-in-out;
+			p {
+				position: absolute;
+				bottom: 33px;
+				left: 20px;
+				right: 20px;
+				margin: 0;
+				font-weight: $bold;
+				color: $white;
+				&:first-of-type {
+					top: 50%;
+					left: 50%;
+					margin: -10px 0 0 -10px;
+					@include font-size( 36 );
+				}
+				&:last-of-type {
+					bottom: 15px;
+					@include font-size( 12 );
+					font-weight: $light;
+					text-transform: uppercase;
+				}
+			}
+		}
+		&:hover div {
+			opacity: 1;
+		}
+	}
+	&.extended {
+		height: 430px;
+		img {
+			height: 430px;
+		}
+	}
+}
+
+.news-item {
+	width: 100%;
+	height: 400px;
+	margin: 0 0 30px;
+	.featured-img {
+		img {
+			width: 100%;
+			height: 200px;
+			object-fit: cover;
+			object-position: 50% top;
+		}
+	}
+	.captions {
+		position: relative;
+		width: 100%;
+		height: 200px;
+		padding: 20px;
+		background: $white;
+		a {
+			position: absolute;
+			bottom: 20px;
+			left: 20px;
+			color: $primary;
+			@include font-size( 14 );
+			@include transition( all, .33s ease-in-out );
+			&:hover {
+				color: #444;
+			}
+		}
+	}
+	&.featured {
+		@extend %clearfix;
+		.featured-img, .captions {
+			float: left;
+			width: 50%;
+			height: 400px;
+		}
+		.featured-img img {
+			height: 400px;
+		}
+	}
+}
+.blog, .archive {
+	.news-item {
+		.captions {
+			background: $lightgrey;
+		}
+	}
+}
+
+.contact-point {
+	span {
+		font-weight: $bold;
+		text-transform: uppercase;
+	}
+}
+
+.social-links {
+	@extend %clearfix;
+	li {
+		float: left;
+		width: 40px;
+		height: 40px;
+		margin: 0 15px 0 0;
+		background: $lightgrey;
+		text-align: center;
+		@include border-radius( 50% );
+		@include transition( all, .33s ease-in-out );
+		&:before {
+			margin: 0;
+			content: '';
+		}
+		a {
+			display: block;
+			height: 100%;
+			line-height: 40px;
+			i {
+				color: $black;
+			}
+		}
+		&:hover {
+			a > i {
+				color: $white;
+			}
+		}
+		&.facebook:hover {
+			background: #365899;
+		}
+		&.twitter:hover {
+			background: #1DA1F2;
+		}
+		&.pinterest:hover {
+			background: #BD081C;
+		}
+		&.linkedin:hover {
+			background: #0073B1;
+		}
+		&:last-of-type {
+			margin: 0;
+		}
+	}
+}
+
+.wpcf7-form {
+	input[type="text"], input[type="email"], textarea {
+		width: 100%;
+		height: 40px;
+		margin: 5px 0 0;
+		padding: 5px 10px;
+		background: $lightgrey;
+		border: 0;
+		&.wpcf7-not-valid {
+			border: 1px solid #F00;
+		}
+	}
+	textarea {
+		height: 150px;
+	}
+	.smallprint {
+		color: #888;
+		@include font-size( 10 );
+	}
+	.wpcf7-not-valid-tip {
+		margin: 5px 0 0;
+	}
+	.wpcf7-validation-errors {
+		margin: 10px 0 0;
+	    padding: 10px;
+		@include font-size( 12 );
+	    font-weight: $bold;
+		text-align: center;
+	}
+	.ajax-loader {
+		display: block;
+		margin: 5px auto 0;
+	}
+}
+
+.post-content h3:after, .post-content h5:after, .rule:after {
+	display: block;
+	content: '';
+	width: 50px;
+	height: 2px;
+	margin: 0.5rem 0 1rem;
+	background: $lightgrey;
+}
 
 /* -- CH06 - Footer -- */
 .footer {
+	@extend %clearfix;
 	background: #333;
 	p {
+		float: left;
+		width: 50%;
 		margin: 0;
 		padding: .5rem 1rem;
 		color: $white;
 		@include font-size( 12 );
+		&:last-of-type {
+			text-align: right;
+		}
+		> a:hover {
+			color: $primaryhover;
+		}
 	}
 }
 
 /* -- CH07 - Miscellaneous -- */
+.jumpto.backtotop {
+	position: fixed;
+	right: 25px;
+	bottom: 25px;
+	width: 50px;
+	height: 50px;
+	padding: 12px 0 0;
+	background: $primary;
+	color: $white;
+	text-align: center;
+	&:hover {
+		background: $primaryhover;
+	}
+}
+.pagination-wrapper {
+	width: 100%;
+	margin: 15px 0 0;
+    text-align: center;
+	.pagination {
+		display: inline-block;
+		.page-numbers {
+			float: left;
+			display: block;
+			width: 30px;
+			height: 30px;
+			@include font-size( 12 );
+			font-weight: $bold;
+			margin: 0 5px 0 0;
+			background: lighten( $primary, 10% );
+			color: $white;
+			line-height: 30px;
+			text-transform: uppercase;
+			text-decoration: none;
+			&.current {
+				background: $primary;
+			}
+			&.next, &.prev {
+				width: 100px;
+			}
+			&.next {
+				margin: 0;
+			}
+			&:hover {
+				background: $primaryhover;
+			}
+		}
+	}
+}
+
+.light-font { font-weight: $light; }
+.bold-font { font-weight: $bold; }
+
+.primary-col { color: $primary; }
+
+.primary-bg { background: $primary; }
 
 /* -- CH08 - Responsive Breakpoints -- */
 @media only screen and (max-width: 1700px) {
@@ -186,10 +808,82 @@ blockquote {
 }
 
 @media only screen and (max-width: 991px) {
+	.news-item {
+		height: 510px;
+		.captions {
+			height: 310px;
+		}
+		&.featured {
+			.captions, .featured-img img {
+				height: 510px;
+			}
+		}
+	}
+	.sidebar {
+		ul.blogroll {
+			li {
+				div {
+					width: 140px;
+					p {
+						line-height: 1rem;
+					}
+				}
+			}
+		}
+	}
 
 }
 
 @media only screen and (max-width: 767px) {
+	.header {
+		.masthead {
+			.inner {
+				.masthead-brand {
+					float: none;
+					margin: 2px auto;
+					text-align: center;
+				}
+				.nav-masthead {
+					> a:hover, > a:active {
+						border-top-color: transparent;
+					}
+				}
+			}
+
+		}
+	}
+	.news-item {
+		height: 420px;
+		.captions {
+			height: 220px;
+		}
+		&.featured {
+			height: 570px;
+			.captions, .featured-img {
+				float: none;
+				width: 100%;
+				height: 220px;
+				img {
+					height: 220px;
+				}
+			}
+			.captions {
+				height: 350px;
+			}
+		}
+	}
+	.social-links {
+		margin: 0 0 30px;
+	}
+	.sidebar {
+		ul.blogroll {
+			li {
+				div {
+					width: 200px;
+				}
+			}
+		}
+	}
 
 }
 
@@ -202,6 +896,18 @@ blockquote {
 }
 
 @media only screen and (max-width: 410px) {
+	h1 { @include font-size( 33 ); }
+	
+	.sidebar {
+		ul.blogroll {
+			li {
+				div {
+					width: 140px;
+				}
+			}
+		}
+	}
+
 
 }
 
