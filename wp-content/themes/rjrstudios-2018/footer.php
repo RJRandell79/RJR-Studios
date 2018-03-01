@@ -5,7 +5,7 @@
 <footer class="footer container-fluid">
 	<div class="container">
 		<p>&copy;<?php echo date( 'Y' ); ?>&nbsp;Rob Randell.</p>
-		<p><a href="#" title="Privacy policy">Privacy Policy</a></p>
+		<p><a href="<?php the_permalink( 237 ); ?>" title="Privacy policy">Privacy Policy</a></p>
 	</div>
 
 	<?php wp_footer(); ?>

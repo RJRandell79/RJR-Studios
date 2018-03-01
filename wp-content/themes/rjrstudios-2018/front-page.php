@@ -5,7 +5,7 @@
 <section class="banner container-fluid" role="banner">
 	<article class="container">
 		<div>
-			<h1><span class="light-font">Hi. This is Rob.</span><br />Professional, <span class="primary-col">Web Developer</span></h1>
+			<h1><span class="light-font">Hi. This is Rob.</span><br />Professional <span class="primary-col">Web Developer</span></h1>
 		</div>
 	</article>
 </section>
@@ -71,15 +71,15 @@
 						<li><div><span></span><div></div></div>
 							<span class="title">B.A. (Hons) Design</span>
 							<span class="place">Blackpool &amp; The Fylde College (2000)</span>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
+							I studied a Bachelor of Art degree at Blackpool &amp; The Fylde College starting in 1997 and graduating with a second class degree in 2000. The course was mainly centred around technical illustration.</li>
 						<li><div><span></span><div></div></div>
 							<span class="title">BTEC Technical Illustration</span>
 							<span class="place">Blackburn College (1997)</span>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
+							I studied for a BTEC National Diploma in technical illustration at Blackburn College. The course commenced in 1995 and was completed in 1997. I also gained another GCSE in Communication Studies.</li>
 						<li><div><span></span><div></div></div>
 							<span class="title">9 GCSEs Grades B - D</span>
 							<span class="place">Walton-le-Dale High School (1995)</span>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
+							I attended Walton-le-Dale High School near Preston, Lancashire and left with 9 GCSE results between grades B and D. My highest results were in Geography and Art &amp; Design.</li>
 					</ul>
 				</div>
 
@@ -90,15 +90,15 @@
 						<li><div><span></span><div></div></div>
 							<span class="title">Web Developer</span>
 							<span class="place">Heckford Advertising, Preston (2016 - present)</span>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
+							I am currently employed at Heckford Advertising as a Web Developer. I am currently responsible for all of Heckford&rsquo;s client websites, the development of new bespoke websites and the maintenance of existing websites.</li>
 						<li><div><span></span><div></div></div>
 							<span class="title">Web Developer</span>
 							<span class="place">MMA Digital, Cheadle (2014 - 2016)</span>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
+							I was employed at MMA Digital as a Web Developer. I was building and maintaining new and existing MMA Digital client websites. MMA Digital operated with the legal sector and many of the website were tailored for solicitors.</li>
 						<li><div><span></span><div></div></div>
 							<span class="title">Digital Developer</span>
 							<span class="place">APS Group, Cheadle (2012 - 2014)</span>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
+							I was working at The APS Group as a Digital Developer. I was part of a digital team creating and maintaining email builds, websites and I was involved with mobile app development pitches.</li>
 					</ul>
 				</div>
 			</div>
@@ -169,7 +169,7 @@
 							$imgs = get_images( get_the_ID() );
 					?>
 					<div class="portfolio-item <?php echo 'project-' . $y; ?>">
-						<img class="lozad" src="<?php echo $imgs[ 0 ] ?>" srcset="<?php echo $imgs[ 1 ] ?>" sizes="(max-width: 600px) 100vw, 600px" alt="<?php echo $imgs[ 2 ]; ?>" />
+						<img class="lozad" data-src="<?php echo $imgs[ 0 ] ?>" data-srcset="<?php echo $imgs[ 1 ] ?>" sizes="(max-width: 600px) 100vw, 600px" alt="<?php echo $imgs[ 2 ]; ?>" />
 						<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
 							<div>
 								<p>&plus;</p>
@@ -190,7 +190,7 @@
 							$imgs = get_images( get_the_ID() );
 					?>
 					<div class="portfolio-item extended <?php echo 'project-' . $y; ?>">
-						<img class="lozad" src="<?php echo $imgs[ 0 ] ?>" srcset="<?php echo $imgs[ 1 ] ?>" sizes="(max-width: 600px) 100vw, 600px" alt="<?php echo $imgs[ 2 ]; ?>" />
+						<img class="lozad" src="<?php echo $imgs[ 0 ] ?>" data-srcset="<?php echo $imgs[ 1 ] ?>" sizes="(max-width: 600px) 100vw, 600px" alt="<?php echo $imgs[ 2 ]; ?>" />
 						<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
 							<div>
 								<p>&plus;</p>
@@ -210,7 +210,7 @@
 							$imgs = get_images( get_the_ID() );
 					?>
 					<div class="portfolio-item <?php echo 'project-' . $y; ?>">
-						<img class="lozad" src="<?php echo $imgs[ 0 ] ?>" srcset="<?php echo $imgs[ 1 ] ?>" sizes="(max-width: 600px) 100vw, 600px" alt="<?php echo $imgs[ 2 ]; ?>" />
+						<img class="lozad" data-src="<?php echo $imgs[ 0 ] ?>" data-srcset="<?php echo $imgs[ 1 ] ?>" sizes="(max-width: 600px) 100vw, 600px" alt="<?php echo $imgs[ 2 ]; ?>" />
 						<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
 							<div>
 								<p>&plus;</p>
