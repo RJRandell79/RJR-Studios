@@ -5,9 +5,9 @@
 
 <!-- This is the single-projects.php -->
 <section class="banner container-fluid" role="banner">
-	<img src="<?php echo $imgs[ 0 ]; ?>" alt="<?php echo $imgs[ 2 ]; ?>" />
+	<img src="<?php echo $imgs[ 0 ]; ?>" srcset="<?php echo $imgs[ 1 ]; ?>" alt="<?php echo $imgs[ 2 ]; ?>" />
 	<article class="container">
-		<div><?php echo fancy_title( get_the_title() ); ?></div>
+		<div class="titles"><?php echo fancy_title( get_the_title() ); ?></div>
 	</article>
 </section>
 
@@ -35,7 +35,7 @@
 					<p class="metadata">In <span><?php echo $type; ?></span> / By <span>Rob Randell</span> on <span><?php echo the_time( 'jS F Y' ); ?></span></p>
 
 					<?php if( have_rows( 'screenshots' ) ) : ?>
-	                <div class="owl-carousel">
+	                <div class="owl-carousel project-carousel">
 	                    <?php
 	                        while( have_rows( 'screenshots' ) ) : the_row();
 							$img_id = get_sub_field( 'slide' );

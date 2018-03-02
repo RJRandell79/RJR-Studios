@@ -32,14 +32,14 @@ $params = array(
 	'screen_name' => 'RJRan',
 	'q' => 'rjran',
 	'include_rts' => 'false',
-	'count' => '1',
+	'count' => '5',
 	'exclude_replies' => 'true'
 );
 
 //Make the REST call
 $data = ( array ) $cb->$api( $params );
 
-$jsonData = json_encode( $data ); 
+$jsonData = json_encode( $data );
 //$jsonStart = "{\"value\":{\"items\":";
 //$jsonEnd = "}}";
 

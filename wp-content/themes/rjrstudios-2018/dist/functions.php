@@ -6,9 +6,12 @@ function theme_styles() {
     //global $wp_styles;
     wp_enqueue_style( 'bootstrap_css', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css', '', null );
 
-    if( is_singular( 'projects' ) ) :
+    if( is_front_page() || is_singular( 'projects' ) ) :
+        if( is_singular( 'projects' ) ) :
+            wp_enqueue_style( 'fancybox_css', get_template_directory_uri() . '/dist/css/jquery.fancybox.min.css', '', null );
+        endif;
+
         wp_enqueue_style( 'owl_carousel_css', get_template_directory_uri() . '/dist/css/owl.carousel.min.css', '', null );
-        wp_enqueue_style( 'fancybox_css', get_template_directory_uri() . '/dist/css/jquery.fancybox.min.css', '', null );
     endif;
 
 	wp_enqueue_style( 'theme_css', get_template_directory_uri() . '/dist/css/rjr_theme.min.css', '', null );
@@ -28,12 +31,16 @@ function theme_js() {
     wp_register_script( 'jquery', 'https://code.jquery.com/jquery-3.2.1.min.js', '', null, true );
     wp_enqueue_script( 'jquery' );
 
-    if( is_singular( 'projects' ) ) :
+    if( is_front_page() || is_singular( 'projects' ) ) :
+        if( is_singular( 'projects' ) ) :
+            wp_enqueue_script( 'fancybox_css', get_template_directory_uri() . '/dist/js/jquery.fancybox.min.js', array( 'jquery' ), '', true );
+        endif;
+
         wp_enqueue_script( 'owl_carousel_js', get_template_directory_uri() . '/dist/js/owl.carousel.min.js', array( 'jquery' ), '', true );
-        wp_enqueue_script( 'fancybox_css', get_template_directory_uri() . '/dist/js/jquery.fancybox.min.js', array( 'jquery' ), '', true );
     endif;
 
     wp_enqueue_script( 'lozad_js', 'https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js', '', null, true );
+    wp_enqueue_script( 'modernizr_js', get_template_directory_uri() . '/dist/js/modernizr-custom.min.js', '', '', false );
 
     wp_enqueue_script( 'bootstrap_js', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js', array( 'jquery' ), '', true );
     wp_enqueue_script( 'theme_rjr_js', get_template_directory_uri() . '/dist/js/rjr_theme.min.js', array( 'jquery', 'bootstrap_js' ), '', true );
@@ -216,6 +223,14 @@ function fancy_title( $str ) {
     endif;
 
     return $html;
+}
+
+function get_image( $img_id ) {
+    $img_src = wp_get_attachment_image_src( $img_id, 'full' );
+    $img_srcset = wp_get_attachment_image_srcset( $img_id, 'full' );
+    $img_alt = get_post_meta( $img_id, '_wp_attachment_image_alt', true );
+
+    return array( esc_url( $img_src[ 0 ] ), esc_attr( $img_srcset ), $img_alt );
 }
 
 function get_images( $postid ) {

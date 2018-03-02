@@ -2736,11 +2736,11 @@ article {
   position: relative;
   background: #F6F6F6;
   overflow: hidden; }
-  .banner div {
+  .banner .titles {
     display: table;
     width: 60%;
     padding: 18% 0; }
-    .banner div h1 {
+    .banner .titles h1 {
       display: table-cell;
       margin: 0;
       padding: 0;
@@ -2812,7 +2812,7 @@ article {
       .owl-carousel .owl-dots .owl-dot:last-of-type {
         margin: 0; }
 
-.about h2, .resume h2, .services h2, .portfolio h2, .news h2, .contact h2 {
+.about h2, .resume h2, .services h2, .portfolio h2, .news h2, .twitter-feed h2, .contact h2 {
   margin: 0 0 30px;
   text-align: center;
   text-transform: uppercase; }
@@ -2954,6 +2954,31 @@ article {
 
 .blog .news-item .captions, .archive .news-item .captions {
   background: #F6F6F6; }
+
+.twitter-feed {
+  background: #222; }
+  .twitter-feed h2 {
+    color: #FFF; }
+  .twitter-feed img {
+    opacity: 0.075; }
+  .twitter-feed .twitter-container {
+    padding: 15px 50px;
+    background: rgba(255, 255, 255, 0.975);
+    text-align: center; }
+    .twitter-feed .twitter-container .twitter-inner .tweet-date {
+      font-size: 12px;
+      font-size: 0.75rem; }
+    .twitter-feed .twitter-container .owl-carousel .owl-nav .owl-prev, .twitter-feed .twitter-container .owl-carousel .owl-nav .owl-next {
+      color: #fad4cd;
+      text-shadow: none; }
+      .twitter-feed .twitter-container .owl-carousel .owl-nav .owl-prev:hover, .twitter-feed .twitter-container .owl-carousel .owl-nav .owl-next:hover {
+        color: #f08470; }
+    .twitter-feed .twitter-container .owl-carousel .owl-nav .owl-prev {
+      left: -40px; }
+    .twitter-feed .twitter-container .owl-carousel .owl-nav .owl-next {
+      right: -40px; }
+    .twitter-feed .twitter-container .owl-carousel .owl-dots {
+      bottom: -10px; }
 
 .contact-point span {
   font-weight: 700;
@@ -3107,6 +3132,9 @@ article {
 
 .primary-bg {
   background: #EE7059; }
+
+.touchevents .portfolio-item a div {
+  opacity: 1; }
 
 /* -- CH08 - Responsive Breakpoints -- */
 @media only screen and (max-width: 991px) {

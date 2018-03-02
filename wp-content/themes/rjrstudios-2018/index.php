@@ -14,9 +14,9 @@
 
 <!-- This is the index.php -->
 <section class="banner container-fluid" role="banner">
-	<img src="<?php echo $imgs[ 0 ]; ?>" alt="<?php echo $imgs[ 2 ]; ?>" />
+	<img src="<?php echo $imgs[ 0 ]; ?>" srcset="<?php echo $imgs[ 1 ]; ?>" alt="<?php echo $imgs[ 2 ]; ?>" />
 	<article class="container">
-		<div><?php echo fancy_title( $title ); ?></div>
+		<div class="titles"><?php echo fancy_title( $title ); ?></div>
 	</article>
 </section>
 

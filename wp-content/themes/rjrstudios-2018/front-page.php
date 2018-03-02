@@ -4,7 +4,7 @@
 <!-- This is the front-page.php -->
 <section class="banner container-fluid" role="banner">
 	<article class="container">
-		<div>
+		<div class="titles">
 			<h1><span class="light-font">Hi. This is Rob.</span><br />Professional <span class="primary-col">Web Developer</span></h1>
 		</div>
 	</article>
@@ -318,6 +318,30 @@
 	</article>
 </section>
 <?php endif; wp_reset_query(); ?>
+
+<section id="twitter-section" class="twitter-feed container-fluid banner">
+	<?php $imgs = get_image( 66 ); ?>
+	<img class="lozad" data-src="<?php echo $imgs[ 0 ]; ?>" data-srcset="<?php echo $imgs[ 1 ]; ?>" alt="<?php echo $imgs[ 2 ]; ?>" />
+	<article class="container">
+		<div class="py-4">
+			<h2>Twitter</h2>
+
+			<div class="row">
+				<div class="col-md-6 offset-md-3">
+					<div class="twitter-container">
+						<div class="twitter-inner owl-carousel">
+							<div></div>
+							<div></div>
+							<div></div>
+							<div></div>
+							<div></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</article>
+</section>
 
 <section id="contact-section" class="contact container-fluid">
 	<article class="container">

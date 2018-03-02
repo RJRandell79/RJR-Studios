@@ -25,32 +25,7 @@ String.prototype.parseHashtag = function() {
 
 jQuery( document ).ready(function( $ ) { // jshint ignore:line
 
-	if( $( '.twitter-feed' ).length > 0 ) {
-		$.ajax({
-			type: 'GET',
-			url: url,
-			async: true,
-			jsonpCallback: 'jsonCallback',
-			contentType: 'application/json',
-			dataType: 'jsonp',
-			success: function( json ) {
-
-		       	// GRAB TWEET
-				var tweet = json.tweets[0][0].text;
-				var date = json.tweets[0][0].created_at;
-				var formattedDate = date.slice(0, -11);
-
-				var formattedTweet = tweet.parseURL().parseUsername().parseHashtag();
-				$( '<p/>', { 'class': 'latest-tweet', html: formattedTweet }).appendTo( '.twitter-inner' );
-				$( '<p/>', { 'class': 'tweet-date', html: 'Tweeted on: ' + formattedDate }).insertAfter( '.latest-tweet' );
-				$( '#twitter' ).find( 'a' ).attr( 'target', '_blank' );
-		    },
-		    error: function( e ) {
-				console.log( e.message );
-		    }
-		});
-	}
-	if( $( '.owl-carousel' ).length > 0 ) {
+	function initOwl() {
 		$( '.owl-carousel' ).owlCarousel({
 			loop: true,
 			items: 1,
@@ -64,6 +39,41 @@ jQuery( document ).ready(function( $ ) { // jshint ignore:line
 			singleItem: true,
 			stagePadding: 0,
 			navText : [ '<i class="fa fa-arrow-left" aria-hidden="true"></i>', '<i class="fa fa-arrow-right" aria-hidden="true"></i>' ],
+		});
+	}
+
+	if( $( '.project-carousel' ).length > 0 ) {
+		initOwl();
+	}
+
+	if( $( '.twitter-feed' ).length > 0 ) {
+		$.ajax({
+			type: 'GET',
+			url: url,
+			async: true,
+			jsonpCallback: 'jsonCallback',
+			contentType: 'application/json',
+			dataType: 'jsonp',
+			success: function( json ) {
+
+		       	// GRAB TWEETS
+				$( '.twitter-inner div' ).each( function( idx ) {
+					var tweet = json.tweets[ 0 ][ idx ].text;
+					var date = json.tweets[ 0 ][ idx ].created_at;
+					var formattedDate = date.slice( 0, -11 );
+					var formattedTweet = tweet.parseURL().parseUsername().parseHashtag();
+
+					$( '<p/>', { 'class': 'tweet', html: formattedTweet }).appendTo( this );
+					$( '<p/>', { 'class': 'tweet-date', html: 'Tweeted on: ' + formattedDate }).appendTo( this );
+
+					$( this ).find( 'a' ).attr( 'target', '_blank' );
+				}).promise().done( function() {
+					initOwl();
+				});;
+		    },
+		    error: function( e ) {
+				console.log( e.message );
+		    }
 		});
 	}
 

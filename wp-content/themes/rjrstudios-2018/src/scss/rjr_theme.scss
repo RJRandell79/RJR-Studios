@@ -364,7 +364,7 @@ article {
 	position: relative;
 	background: $lightgrey;
 	overflow: hidden;
-	div {
+	.titles {
 		display: table;
 		width: 60%;
 		padding: 18% 0;
@@ -452,7 +452,7 @@ article {
 	}
 }
 
-.about, .resume, .services, .portfolio, .news, .contact {
+.about, .resume, .services, .portfolio, .news, .twitter-feed, .contact {
 	h2 {
 		margin: 0 0 30px;
 		text-align: center;
@@ -620,6 +620,45 @@ article {
 	.news-item {
 		.captions {
 			background: $lightgrey;
+		}
+	}
+}
+.twitter-feed {
+	background: #222;
+	h2 {
+		color: $white;
+	}
+	img {
+		opacity: 0.075;
+	}
+	.twitter-container {
+		padding: 15px 50px;
+		background: rgba( 255, 255, 255, 0.975 );
+		text-align: center;
+		.twitter-inner {
+			.tweet-date {
+				@include font-size( 12 );
+			}
+		}
+		.owl-carousel {
+			.owl-nav {
+				.owl-prev, .owl-next {
+					color: lighten( $primary, 25% );
+					text-shadow: none;
+					&:hover {
+						color: $primaryhover;
+					}
+				}
+				.owl-prev {
+					left: -40px;
+				}
+				.owl-next {
+					right: -40px;
+				}
+			}
+			.owl-dots {
+				bottom: -10px;
+			}
 		}
 	}
 }
@@ -798,6 +837,14 @@ article {
 
 .primary-bg { background: $primary; }
 
+.touchevents {
+	.portfolio-item {
+		a div {
+			opacity: 1;
+		}
+	}
+}
+
 /* -- CH08 - Responsive Breakpoints -- */
 @media only screen and (max-width: 1700px) {
 
@@ -897,7 +944,7 @@ article {
 
 @media only screen and (max-width: 410px) {
 	h1 { @include font-size( 33 ); }
-	
+
 	.sidebar {
 		ul.blogroll {
 			li {
