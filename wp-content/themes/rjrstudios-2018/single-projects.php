@@ -55,7 +55,7 @@
 					<?php elseif( $banner_id && $fullbanner_src ) : ?>
 
 					<a data-fancybox="banner" href="<?php echo $fullbanner_src[ 0 ]; ?>">
-						<img class="lozad" src="<?php echo esc_url( $banner_src[ 0 ] ); ?>" data-srcset="<?php echo esc_attr( $banner_srcset ); ?>" sizes="(max-width: 600px) 100vw, 600px" alt="<?php echo $banner_alt; ?>" />
+						<img class="lozad" data-src="<?php echo esc_url( $banner_src[ 0 ] ); ?>" data-srcset="<?php echo esc_attr( $banner_srcset ); ?>" sizes="(max-width: 600px) 100vw, 600px" alt="<?php echo $banner_alt; ?>" />
 					</a>
 
 					<?php else : ?>

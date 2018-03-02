@@ -190,7 +190,7 @@
 							$imgs = get_images( get_the_ID() );
 					?>
 					<div class="portfolio-item extended <?php echo 'project-' . $y; ?>">
-						<img class="lozad" src="<?php echo $imgs[ 0 ] ?>" data-srcset="<?php echo $imgs[ 1 ] ?>" sizes="(max-width: 600px) 100vw, 600px" alt="<?php echo $imgs[ 2 ]; ?>" />
+						<img class="lozad" data-src="<?php echo $imgs[ 0 ] ?>" data-srcset="<?php echo $imgs[ 1 ] ?>" sizes="(max-width: 600px) 100vw, 600px" alt="<?php echo $imgs[ 2 ]; ?>" />
 						<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
 							<div>
 								<p>&plus;</p>
