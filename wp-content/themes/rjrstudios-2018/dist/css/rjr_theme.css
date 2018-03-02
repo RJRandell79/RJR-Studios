@@ -2846,7 +2846,17 @@ article {
       left: 0;
       width: 66%;
       height: 5px;
-      background: #EE7059; }
+      /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fad4cd+0,ee7059+100 */
+      background: #fad4cd;
+      /* Old browsers */
+      background: -moz-linear-gradient(left, #fad4cd 0%, #EE7059 100%);
+      /* FF3.6-15 */
+      background: -webkit-linear-gradient(left, #fad4cd 0%, #EE7059 100%);
+      /* Chrome10-25,Safari5.1-6 */
+      background: linear-gradient(to right, #fad4cd 0%, #EE7059 100%);
+      /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fad4cd', endColorstr='#ee7059', GradientType=1 );
+      /* IE6-9 */ }
 
 .service {
   padding: 15px;
@@ -2962,6 +2972,7 @@ article {
   .twitter-feed img {
     opacity: 0.075; }
   .twitter-feed .twitter-container {
+    margin: 0 0 50px;
     padding: 15px 50px;
     background: rgba(255, 255, 255, 0.975);
     text-align: center; }
@@ -2979,6 +2990,8 @@ article {
       right: -40px; }
     .twitter-feed .twitter-container .owl-carousel .owl-dots {
       bottom: -10px; }
+  .twitter-feed .sidetext {
+    color: #FFF; }
 
 .contact-point span {
   font-weight: 700;

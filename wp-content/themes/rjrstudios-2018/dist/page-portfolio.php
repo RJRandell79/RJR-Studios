@@ -16,7 +16,7 @@
 <?php
 	$projectargs = array(
 		'post_type' => 'projects',
-		'posts_per_page' => 9 ,
+		'posts_per_page' => 9,
 		'paged' => $paged
 	);
 	$wp_query = new WP_Query( $projectargs );
@@ -35,7 +35,7 @@
 				?>
 				<div class="col-md-4">
 					<div class="portfolio-item <?php echo 'project-' . $y; ?>">
-						<img class="lozad" src="<?php echo $imgs[ 0 ] ?>" srcset="<?php echo $imgs[ 1 ] ?>" sizes="(max-width: 600px) 100vw, 600px" alt="<?php echo $imgs[ 2 ]; ?>" />
+						<img src="<?php echo $imgs[ 0 ] ?>" srcset="<?php echo $imgs[ 1 ] ?>" sizes="(max-width: 600px) 100vw, 600px" alt="<?php echo $imgs[ 2 ]; ?>" />
 						<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
 							<div>
 								<p>&plus;</p>

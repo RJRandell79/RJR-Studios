@@ -492,7 +492,12 @@ article {
 			left: 0;
 			width: 66%;
 			height: 5px;
-			background: $primary;
+			/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fad4cd+0,ee7059+100 */
+			background: lighten( $primary, 25% ); /* Old browsers */
+			background: -moz-linear-gradient( left, lighten( $primary, 25% ) 0%, $primary 100% ); /* FF3.6-15 */
+			background: -webkit-linear-gradient( left, lighten( $primary, 25% ) 0%, $primary 100% ); /* Chrome10-25,Safari5.1-6 */
+			background: linear-gradient( to right, lighten( $primary, 25% ) 0%, $primary 100% ); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fad4cd', endColorstr='#ee7059', GradientType=1 ); /* IE6-9 */
 		}
 	}
 }
@@ -632,6 +637,7 @@ article {
 		opacity: 0.075;
 	}
 	.twitter-container {
+		margin: 0 0 50px;
 		padding: 15px 50px;
 		background: rgba( 255, 255, 255, 0.975 );
 		text-align: center;
@@ -660,6 +666,9 @@ article {
 				bottom: -10px;
 			}
 		}
+	}
+	.sidetext {
+		color: $white;
 	}
 }
 

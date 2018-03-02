@@ -314,14 +314,14 @@
 			<a class="btn" href="<?php the_permalink( 6 ); ?>" title="See more">See more&hellip;</a>
 		</div>
 
-		<p class="sidetext"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Contact</p>
+		<p class="sidetext"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Twitter</p>
 	</article>
 </section>
 <?php endif; wp_reset_query(); ?>
 
 <section id="twitter-section" class="twitter-feed container-fluid banner">
-	<?php $imgs = get_image( 66 ); ?>
-	<img class="lozad" data-src="<?php echo $imgs[ 0 ]; ?>" data-srcset="<?php echo $imgs[ 1 ]; ?>" alt="<?php echo $imgs[ 2 ]; ?>" />
+	<?php $imgs = get_image( 67 ); ?>
+	<img src="<?php echo $imgs[ 0 ]; ?>" srcset="<?php echo $imgs[ 1 ]; ?>" alt="<?php echo $imgs[ 2 ]; ?>" />
 	<article class="container">
 		<div class="py-4">
 			<h2>Twitter</h2>
@@ -340,6 +340,8 @@
 				</div>
 			</div>
 		</div>
+		<p class="sidetext"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Contact</p>
+
 	</article>
 </section>
 
