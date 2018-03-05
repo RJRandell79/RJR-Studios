@@ -52,6 +52,8 @@
 				<?php endif; ?>
 
 			</div>
+
+			<a class="btn" href="<?php the_permalink( 38 ); ?>" title="Read more">Read more&hellip;</a>
 		</div>
 
 		<p class="sidetext"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Resume</p>

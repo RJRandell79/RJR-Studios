@@ -7,6 +7,7 @@
         <a href="<?php the_permalink( 36 ); ?>" title="Back to projects"><div class="btn">Back to projects</div></a>
         <?php endif; ?>
         <a href="<?php the_permalink( 6 ); ?>" title="Back to articles"><div class="btn">Back to articles</div></a>
+        <a href="<?php bloginfo( 'url' ); ?>" title="Back to articles"><div class="btn">Back to homepage</div></a>
         <?php if( is_singular( 'post' ) ) : ?>
         <?php previous_post_link( '%link', '<div class="btn">Previous article</div>' ); ?>
         <?php next_post_link( '%link', '<div class="btn">Next article</div>' ); ?>

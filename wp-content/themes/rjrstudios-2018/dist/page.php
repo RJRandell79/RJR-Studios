@@ -15,7 +15,7 @@
 	<div class="container">
 		<div class="row">
 
-			<div class="col-md">
+			<div class="col-md-8">
 				<article class="post-content py-4">
 				<?php
 					if( have_posts() ) : while ( have_posts() ) : the_post();
@@ -23,6 +23,13 @@
 					endwhile; endif;
 				?>
 				</article>
+			</div>
+
+			<div class="col-md-4">
+				<?php
+					wp_reset_query();
+					get_sidebar();
+				?>
 			</div>
 
 		</div>

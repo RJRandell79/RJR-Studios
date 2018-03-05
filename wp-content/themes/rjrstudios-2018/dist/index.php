@@ -9,6 +9,8 @@
 		$title = single_tag_title( 'Browsing articles tagged: ', false );
 	elseif( is_archive() ) :
 		$title = 'Browsing articles dated: ' . get_the_time( 'F Y' );
+	else :
+		$title = get_the_title();
 	endif;
 ?>
 

@@ -58,8 +58,8 @@ jQuery( document ).ready(function( $ ) { // jshint ignore:line
 
 		       	// GRAB TWEETS
 				$( '.twitter-inner div' ).each( function( idx ) {
-					var tweet = json.tweets[ 0 ][ idx ].text;
-					var date = json.tweets[ 0 ][ idx ].created_at;
+					var tweet = json.tweets[ idx ].text;
+					var date = json.tweets[ idx ].created_at;
 					var formattedDate = date.slice( 0, -11 );
 					var formattedTweet = tweet.parseURL().parseUsername().parseHashtag();
 

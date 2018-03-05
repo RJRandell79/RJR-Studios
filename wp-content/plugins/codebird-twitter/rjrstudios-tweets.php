@@ -5,7 +5,7 @@ Plugin Name: Codebird Twitter
 Plugin URI: http://wordpress.org/plugins/codebird-twitter/
 Description: Twitter feed via Codebird
 Author: Rob Randell
-Version: 0.5
+Version: 0.6
 Author URI: http://www.rjrstudio.co.uk/
 */
 
@@ -17,8 +17,8 @@ $ACCESS_TOKEN = '262312567-mbnlpIZBquoPY3DFR6hQi6zCiqW4tGq6mlKPDHy7';
 $ACCESS_TOKEN_SECRET = '5Ew4m2n47H2viZ2RkDW3jrq3Q49wFxLKDuavAOa2OjQ';
 
 //Get authenticated
-Codebird::setConsumerKey( $CONSUMER_KEY, $CONSUMER_SECRET );
-$cb = Codebird::getInstance();
+\Codebird\Codebird::setConsumerKey( $CONSUMER_KEY, $CONSUMER_SECRET );
+$cb = \Codebird\Codebird::getInstance();
 $cb->setToken( $ACCESS_TOKEN, $ACCESS_TOKEN_SECRET);
 
 //retrieve posts
@@ -32,7 +32,7 @@ $params = array(
 	'screen_name' => 'RJRan',
 	'q' => 'rjran',
 	'include_rts' => 'false',
-	'count' => '5',
+	'count' => '20',
 	'exclude_replies' => 'true'
 );
 
@@ -43,8 +43,8 @@ $jsonData = json_encode( $data );
 //$jsonStart = "{\"value\":{\"items\":";
 //$jsonEnd = "}}";
 
-$jsonStart = "jsonCallback({\"tweets\":[";
-$jsonEnd = "]})";
+$jsonStart = "jsonCallback({\"tweets\":";
+$jsonEnd = "})";
 
 /*header('Content-Type: application/javascript');
 
