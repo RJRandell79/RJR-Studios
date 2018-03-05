@@ -203,6 +203,15 @@ function taxonomies_projects() {
 add_action( 'init', 'taxonomies_projects', 0 );
 
 /* -- Bespoke functions -- */
+function tag_filter( $query ) {
+    if( !is_admin() && $query->is_main_query() ) {
+        if( $query->is_tag ) {
+            $query->set( 'post_type', array( 'projects', 'post' ) );
+        }
+    }
+}
+add_action( 'pre_get_posts','tag_filter', 10 );
+
 function fancy_title( $str ) {
     $arr = explode( ' ', $str );
     $len = count( $arr );
