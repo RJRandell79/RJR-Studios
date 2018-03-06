@@ -93,7 +93,7 @@ h6 { @include font-size( 14 ); }
 
 ul {
     list-style: none;
-    margin: 0;
+    margin: 0 0 10px;
     padding: 0;
 	li {
 		@include font-size( 14 );
@@ -581,7 +581,7 @@ article {
 
 .news-item {
 	width: 100%;
-	height: 400px;
+	height: 420px;
 	margin: 0 0 30px;
 	.featured-img {
 		img {
@@ -594,7 +594,7 @@ article {
 	.captions {
 		position: relative;
 		width: 100%;
-		height: 200px;
+		height: 220px;
 		padding: 20px;
 		background: $white;
 		a {
@@ -614,10 +614,10 @@ article {
 		.featured-img, .captions {
 			float: left;
 			width: 50%;
-			height: 400px;
+			height: 420px;
 		}
 		.featured-img img {
-			height: 400px;
+			height: 420px;
 		}
 	}
 }
@@ -865,13 +865,13 @@ article {
 
 @media only screen and (max-width: 991px) {
 	.news-item {
-		height: 510px;
+		height: 530px;
 		.captions {
-			height: 310px;
+			height: 330px;
 		}
 		&.featured {
 			.captions, .featured-img img {
-				height: 510px;
+				height: 530px;
 			}
 		}
 	}
@@ -953,6 +953,25 @@ article {
 
 @media only screen and (max-width: 410px) {
 	h1 { @include font-size( 33 ); }
+
+	.news-item {
+		height: 470px;
+		.captions {
+			height: 270px;
+		}
+		&.featured {
+			height: 620px;
+			.captions, .featured-img {
+				height: 220px;
+				img {
+					height: 220px;
+				}
+			}
+			.captions {
+				height: 400px;
+			}
+		}
+	}
 
 	.sidebar {
 		ul.blogroll {
