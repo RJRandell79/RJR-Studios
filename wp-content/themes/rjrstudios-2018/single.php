@@ -1,11 +1,13 @@
 <?php
 	get_header();
+	//$img = get_image( 66 );
 	$imgs = get_images( get_the_ID() );
+
 ?>
 
 <!-- This is the single.php -->
 <section class="banner container-fluid" role="banner">
-	<img src="<?php echo $imgs[ 0 ]; ?>" srcset="<?php echo $imgs[ 1 ]; ?>" alt="<?php echo $imgs[ 2 ]; ?>" />
+	<img src="<?php echo $imgs[ 0 ]; ?>" srcset="<?php echo $imgs[ 1 ]; ?>" alt="<?php //echo $imgs[ 2 ]; ?>" />
 	<article class="container">
 		<div class="titles"><?php echo fancy_title( get_the_title() ); ?></div>
 	</article>
@@ -21,6 +23,7 @@
 					if( have_posts() ) : while( have_posts() ) : the_post();
 					$category = get_the_category();
 				?>
+					<img class="content-image" src="<?php echo $imgs[ 0 ]; ?>" srcset="<?php echo $imgs[ 1 ]; ?>" alt="<?php echo $imgs[ 2 ]; ?>" />
 
 					<p class="metadata">In <span><?php echo $category[ 0 ]->name; ?></span> / By <span>Rob Randell</span> on <span><?php echo the_time( 'jS F Y' ); ?></span></p>
 

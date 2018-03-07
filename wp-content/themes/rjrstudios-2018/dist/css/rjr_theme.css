@@ -2626,10 +2626,20 @@ article {
 .post-content h5 {
   margin: 1em 0 0.5rem; }
 
+.post-content a {
+  word-break: break-all; }
+
 .post-content img {
   width: 100%;
   height: auto;
   margin: 0 0 30px; }
+  .post-content img.content-image {
+    float: left;
+    width: 300px;
+    margin: 0 30px 30px 0;
+    border: 5px solid #FFF;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transform: rotate(-4deg); }
 
 .post-content .tags p, .post-content .tags ul, .post-content .tags li {
   float: left; }
@@ -2695,14 +2705,14 @@ article {
         text-transform: uppercase; }
   .sidebar ul.taglist li {
     float: left;
-    margin: 0 5px 5px 0; }
+    margin: 0 2px 1px 0; }
     .sidebar ul.taglist li a {
       display: inline-block;
       width: inherit;
-      padding: 5px 10px;
+      padding: 3px 6px;
       color: #FFF;
-      font-size: 12px;
-      font-size: 0.75rem;
+      font-size: 10px;
+      font-size: 0.625rem;
       font-weight: 400; }
 
 /* -- CH04 - Header & Navigation -- */
@@ -2754,8 +2764,7 @@ article {
     left: -5px;
     width: 110%;
     height: auto;
-    opacity: 0.4;
-    filter: blur(3px) grayscale(25%); }
+    filter: blur(5px) grayscale(95%) contrast(0.25) brightness(1.75); }
 
 .sidetext {
   position: absolute;
@@ -3187,6 +3196,11 @@ article {
     margin: 0 0 30px; }
   .sidebar ul.blogroll li div {
     width: 200px; } }
+
+@media only screen and (max-width: 600px) {
+  .post-content img.content-image {
+    width: 100%;
+    margin: 0 0 15px 0; } }
 
 @media only screen and (max-width: 410px) {
   h1 {

@@ -226,10 +226,21 @@ article {
 	h5 {
 		margin: 1em 0 0.5rem;
 	}
+	a {
+		word-break: break-all;
+	}
 	img {
 		width: 100%;
 		height: auto;
 		margin: 0 0 30px;
+		&.content-image {
+			float: left;
+			width: 300px;
+			margin: 0 30px 30px 0;
+			border: 5px solid $white;
+			box-shadow: 0 0 5px rgba( 0, 0, 0, 0.3 );
+			transform: rotate( -4deg );
+		}
 	}
 	.tags {
 		p, ul, li {
@@ -314,13 +325,13 @@ article {
 		&.taglist {
 			li {
 				float: left;
-			    margin: 0 5px 5px 0;
+			    margin: 0 2px 1px 0;
 				a {
 					display: inline-block;
 					width: inherit;
-					padding: 5px 10px;
+					padding: 3px 6px;
 					color: $white;
-					@include font-size( 12 );
+					@include font-size( 10 );
 					font-weight: $regular;
 				}
 			}
@@ -384,8 +395,7 @@ article {
 		left: -5px;
 		width: 110%;
 		height: auto;
-		opacity: 0.4;
-		filter: blur( 3px ) grayscale( 25% );
+		filter: blur( 5px ) grayscale( 95% ) contrast( 0.25 ) brightness( 1.75 );	
 	}
 }
 .sidetext {
@@ -944,7 +954,10 @@ article {
 }
 
 @media only screen and (max-width: 600px) {
-
+	.post-content img.content-image {
+		width: 100%;
+		margin: 0 0 15px 0;
+	}
 }
 
 @media only screen and (max-width: 479px) {
