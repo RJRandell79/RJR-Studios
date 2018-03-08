@@ -2749,7 +2749,7 @@ article {
   .banner .titles {
     display: table;
     width: 60%;
-    padding: 18% 0; }
+    padding: 10% 0; }
     .banner .titles h1 {
       display: table-cell;
       margin: 0;
@@ -2759,7 +2759,7 @@ article {
       vertical-align: middle; }
   .banner img {
     position: absolute;
-    top: -25px;
+    top: -40%;
     right: -5px;
     left: -5px;
     width: 110%;
@@ -2943,7 +2943,7 @@ article {
     width: 100%;
     height: 200px;
     object-fit: cover;
-    object-position: 50% top; }
+    object-position: left top; }
   .news-item .captions {
     position: relative;
     width: 100%;
@@ -3160,6 +3160,8 @@ article {
 
 /* -- CH08 - Responsive Breakpoints -- */
 @media only screen and (max-width: 991px) {
+  .banner img {
+    width: 150%; }
   .news-item {
     height: 530px; }
     .news-item .captions {
@@ -3172,6 +3174,8 @@ article {
       line-height: 1rem; } }
 
 @media only screen and (max-width: 767px) {
+  .banner img {
+    width: 250%; }
   .header .masthead .inner .masthead-brand {
     float: none;
     margin: 2px auto;

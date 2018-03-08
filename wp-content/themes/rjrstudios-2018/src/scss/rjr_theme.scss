@@ -378,7 +378,7 @@ article {
 	.titles {
 		display: table;
 		width: 60%;
-		padding: 18% 0;
+		padding: 10% 0;
 		h1 {
 			display: table-cell;
 			margin: 0;
@@ -390,12 +390,12 @@ article {
 	}
 	img {
 		position: absolute;
-		top: -25px;
+		top: -40%;
 		right: -5px;
 		left: -5px;
 		width: 110%;
 		height: auto;
-		filter: blur( 5px ) grayscale( 95% ) contrast( 0.25 ) brightness( 1.75 );	
+		filter: blur( 5px ) grayscale( 95% ) contrast( 0.25 ) brightness( 1.75 );
 	}
 }
 .sidetext {
@@ -598,7 +598,7 @@ article {
 			width: 100%;
 			height: 200px;
 			object-fit: cover;
-			object-position: 50% top;
+			object-position: left top;
 		}
 	}
 	.captions {
@@ -874,6 +874,9 @@ article {
 }
 
 @media only screen and (max-width: 991px) {
+	.banner img {
+		width: 150%;
+	}
 	.news-item {
 		height: 530px;
 		.captions {
@@ -901,6 +904,9 @@ article {
 }
 
 @media only screen and (max-width: 767px) {
+	.banner img {
+		width: 250%;
+	}
 	.header {
 		.masthead {
 			.inner {
