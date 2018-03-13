@@ -2937,17 +2937,17 @@ article {
 
 .news-item {
   width: 100%;
-  height: 420px;
+  height: 430px;
   margin: 0 0 30px; }
   .news-item .featured-img img {
     width: 100%;
     height: 200px;
     object-fit: cover;
-    object-position: left top; }
+    object-position: center top; }
   .news-item .captions {
     position: relative;
     width: 100%;
-    height: 220px;
+    height: 230px;
     padding: 20px;
     background: #FFF; }
     .news-item .captions a {
@@ -2967,9 +2967,9 @@ article {
   .news-item.featured .featured-img, .news-item.featured .captions {
     float: left;
     width: 50%;
-    height: 420px; }
+    height: 430px; }
   .news-item.featured .featured-img img {
-    height: 420px; }
+    height: 430px; }
 
 .blog .news-item .captions, .archive .news-item .captions {
   background: #F6F6F6; }

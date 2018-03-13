@@ -591,20 +591,20 @@ article {
 
 .news-item {
 	width: 100%;
-	height: 420px;
+	height: 430px;
 	margin: 0 0 30px;
 	.featured-img {
 		img {
 			width: 100%;
 			height: 200px;
 			object-fit: cover;
-			object-position: left top;
+			object-position: center top;
 		}
 	}
 	.captions {
 		position: relative;
 		width: 100%;
-		height: 220px;
+		height: 230px;
 		padding: 20px;
 		background: $white;
 		a {
@@ -624,10 +624,10 @@ article {
 		.featured-img, .captions {
 			float: left;
 			width: 50%;
-			height: 420px;
+			height: 430px;
 		}
 		.featured-img img {
-			height: 420px;
+			height: 430px;
 		}
 	}
 }
