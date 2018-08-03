@@ -23,5 +23,8 @@
 	<i class="fa fa-chevron-up" aria-hidden="true"></i>
 </a>
 
+<!--Start Cookie Script-->
+<!-- <script type="text/javascript" charset="UTF-8" src="http://chs03.cookie-script.com/s/3580a7c6e9aba4f402773c6e93983357.js"></script> -->
+<!--End Cookie Script-->
 </body>
 </html>
