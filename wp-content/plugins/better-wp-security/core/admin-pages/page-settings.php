@@ -2,8 +2,6 @@
 
 
 final class ITSEC_Settings_Page {
-	private $version = 2.0;
-
 	private static $instance;
 
 	private $self_url = '';
@@ -70,6 +68,8 @@ final class ITSEC_Settings_Page {
 	}
 
 	public function add_scripts() {
+		ITSEC_Lib::enqueue_util();
+
 		foreach ( $this->modules as $id => $module ) {
 			$module->enqueue_scripts_and_styles();
 		}
@@ -94,12 +94,12 @@ final class ITSEC_Settings_Page {
 		}
 
 		wp_enqueue_script( 'itsec-scrollTo', plugins_url( 'js/scrollTo.js', dirname( __FILE__ ) ), array( 'jquery' ) );
-		wp_enqueue_script( 'itsec-settings-page-script', plugins_url( 'js/settings.js', __FILE__ ), array( 'underscore' ), $this->version, true );
+		wp_enqueue_script( 'itsec-settings-page-script', plugins_url( 'js/settings.js', __FILE__ ), array( 'underscore' ), ITSEC_Core::get_plugin_build(), true );
 		wp_localize_script( 'itsec-settings-page-script', 'itsec_page', $vars );
 	}
 
 	public function add_styles() {
-		wp_enqueue_style( 'itsec-settings-page-style', plugins_url( 'css/style.css', __FILE__ ), array(), $this->version );
+		wp_enqueue_style( 'itsec-settings-page-style', plugins_url( 'css/style.css', __FILE__ ), array(), ITSEC_Core::get_plugin_build() );
 	}
 
 	private function set_translation_strings() {
