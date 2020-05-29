@@ -316,36 +316,10 @@
 			<a class="btn" href="<?php the_permalink( 6 ); ?>" title="See more">See more&hellip;</a>
 		</div>
 
-		<p class="sidetext"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Twitter</p>
+		<p class="sidetext"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Contact</p>
 	</article>
 </section>
 <?php endif; wp_reset_query(); ?>
-
-<section id="twitter-section" class="twitter-feed container-fluid banner">
-	<?php $imgs = get_image( 67 ); ?>
-	<img src="<?php echo $imgs[ 0 ]; ?>" srcset="<?php echo $imgs[ 1 ]; ?>" alt="<?php echo $imgs[ 2 ]; ?>" />
-	<article class="container">
-		<div class="py-4">
-			<h2>Twitter</h2>
-
-			<div class="row">
-				<div class="col-md-6 offset-md-3">
-					<div class="twitter-container">
-						<div class="twitter-inner owl-carousel">
-							<div></div>
-							<div></div>
-							<div></div>
-							<div></div>
-							<div></div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<p class="sidetext"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;Contact</p>
-
-	</article>
-</section>
 
 <section id="contact-section" class="contact container-fluid">
 	<article class="container">
