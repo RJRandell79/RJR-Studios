@@ -23,7 +23,10 @@
 					if( have_posts() ) : while( have_posts() ) : the_post();
 					$category = get_the_category();
 				?>
-					<img class="content-image" src="<?php echo $imgs[ 0 ]; ?>" srcset="<?php echo $imgs[ 1 ]; ?>" alt="<?php echo $imgs[ 2 ]; ?>" />
+					<figure class="content-image">
+						<img src="<?php echo $imgs[ 0 ]; ?>" srcset="<?php echo $imgs[ 1 ]; ?>" alt="<?php echo $imgs[ 2 ]; ?>" />
+						<?php if( $img[ 3 ] !== '' ) : ?><figcaption><a href="<?php echo $imgs[ 3 ]; ?>" title="<?php echo $imgs[ 3 ]; ?>" target="_blank" rel="nofollow noopener"><?php echo $imgs[ 3 ]; ?></a></figcaption><?php endif; ?>
+					</figure>
 
 					<p class="metadata">In <span><?php echo $category[ 0 ]->name; ?></span> / By <span>Rob Randell</span> on <span><?php echo the_time( 'jS F Y' ); ?></span></p>
 

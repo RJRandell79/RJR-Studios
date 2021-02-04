@@ -24,7 +24,6 @@
 
 					<ul class="timeline">
 						<li><div><span></span><div></div></div><span>Name: </span> Rob Randell</li>
-						<li><div><span></span><div></div></div><span>Date of Birth: </span> 13th January 1979</li>
 						<li><div><span></span><div></div></div><span>Job: </span> Web Developer</li>
 						<?php if( $emailaddress ) : ?>
 						<li><div><span></span><div></div></div><span>Email: </span> <a href="mailto:<?php echo $emailaddress; ?>" title="Email"><?php echo $emailaddress; ?></a></li>
@@ -260,9 +259,10 @@
 				?>
 				<div class="col-md-8">
 					<div class="news-item featured">
-						<div class="featured-img">
+						<figure class="featured-img">
 							<img class="lozad" data-src="<?php echo $imgs[ 0 ] ?>" data-srcset="<?php echo $imgs[ 1 ] ?>" sizes="(max-width: 600px) 100vw, 600px" alt="<?php echo $imgs[ 2 ]; ?>" />
-						</div>
+							<?php if( $img[ 3 ] !== '' ) : ?><figcaption><a href="<?php echo $imgs[ 3 ]; ?>" title="<?php echo $imgs[ 3 ]; ?>" target="_blank" rel="nofollow noopener"><?php echo $imgs[ 3 ]; ?></a></figcaption><?php endif; ?>
+						</figure>
 						<div class="captions">
 							<h3><?php the_title(); ?></h3>
 							<p><?php echo the_time( 'jS F Y' ); ?></p>
@@ -274,9 +274,10 @@
 				<?php else : ?>
 				<div class="col-md-4">
 					<div class="news-item">
-						<div class="featured-img">
+						<figure class="featured-img">
 							<img class="lozad" data-src="<?php echo $imgs[ 0 ] ?>" data-srcset="<?php echo $imgs[ 1 ] ?>" sizes="(max-width: 600px) 100vw, 600px" alt="<?php echo $imgs[ 2 ]; ?>" />
-						</div>
+							<?php if( $img[ 3 ] !== '' ) : ?><figcaption><a href="<?php echo $imgs[ 3 ]; ?>" title="<?php echo $imgs[ 3 ]; ?>" target="_blank" rel="nofollow noopener"><?php echo $imgs[ 3 ]; ?></a></figcaption><?php endif; ?>
+						</figure>
 						<div class="captions">
 							<h3><?php the_title(); ?></h3>
 							<p><?php echo balanceTags( wp_trim_words( get_the_content(), $num_words = 20, $more = '&hellip;' ), true ); ?></p>
@@ -300,9 +301,10 @@
 				?>
 				<div class="col-md">
 					<div class="news-item">
-						<div class="featured-img">
+						<figure class="featured-img">
 							<img class="lozad" data-src="<?php echo $imgs[ 0 ] ?>" data-srcset="<?php echo $imgs[ 1 ] ?>" sizes="(max-width: 600px) 100vw, 600px" alt="<?php echo $imgs[ 2 ]; ?>" />
-						</div>
+							<?php if( $img[ 3 ] !== '' ) : ?><figcaption><a href="<?php echo $imgs[ 3 ]; ?>" title="<?php echo $imgs[ 3 ]; ?>" target="_blank" rel="nofollow noopener"><?php echo $imgs[ 3 ]; ?></a></figcaption><?php endif; ?>
+						</figure>
 						<div class="captions">
 							<h3><?php the_title(); ?></h3>
 							<p><?php echo balanceTags( wp_trim_words( get_the_content(), $num_words = 20, $more = '&hellip;' ), true ); ?></p>
@@ -336,7 +338,7 @@
 			<div class="row">
 				<div class="col-md">
 					<?php if( $emailaddress ) : ?><p class="contact-point"><span>Email:</span>&nbsp;<a href="mailto:<?php echo $emailaddress; ?>" title="Email me"><?php echo $emailaddress; ?></a></p><?php endif; ?>
-					<p class="contact-point"><span>Address:</span>&nbsp;Penwortham, Preston, Lancashire.</p>
+					<p class="contact-point"><span>Address:</span>&nbsp;Preston, Lancashire.</p>
 
 					<?php if( $facebook || $twitter || $pinterest || $linkedin ) : ?>
 					<ul class="social-links">

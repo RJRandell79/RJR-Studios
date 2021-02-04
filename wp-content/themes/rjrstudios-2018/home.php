@@ -26,9 +26,10 @@
 
 						<div class="col-md-6">
 							<div class="news-item">
-								<div class="featured-img">
+								<figure class="featured-img">
 									<img class="lozad" data-src="<?php echo $imgs[ 0 ] ?>" data-srcset="<?php echo $imgs[ 1 ] ?>" sizes="(max-width: 600px) 100vw, 600px" alt="<?php echo $imgs[ 2 ]; ?>" />
-								</div>
+									<?php if( $img[ 3 ] !== '' ) : ?><figcaption><a href="<?php echo $imgs[ 3 ]; ?>" title="<?php echo $imgs[ 3 ]; ?>" target="_blank" rel="nofollow noopener"><?php echo $imgs[ 3 ]; ?></a></figcaption><?php endif; ?>
+								</figure>
 								<div class="captions">
 									<h3><?php the_title(); ?></h3>
 									<p><?php echo balanceTags( wp_trim_words( get_the_content(), $num_words = 20, $more = '&hellip;' ), true ); ?></p>

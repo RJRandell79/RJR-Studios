@@ -1,5 +1,0 @@
-[12-Oct-2016 18:50:20 UTC] PHP Warning:  Error while sending QUERY packet. PID=933068 in /home/rjrstudi/public_html/wp-includes/wp-db.php on line 1811
-[12-Oct-2016 18:52:05 UTC] PHP Warning:  Error while sending QUERY packet. PID=934784 in /home/rjrstudi/public_html/wp-includes/wp-db.php on line 1811
-[12-Dec-2016 13:51:56 UTC] PHP Warning:  Error while sending QUERY packet. PID=927570 in /home/rjrstudi/public_html/wp-includes/wp-db.php on line 1868
-[12-Dec-2016 13:54:07 UTC] PHP Warning:  Error while sending QUERY packet. PID=928371 in /home/rjrstudi/public_html/wp-includes/wp-db.php on line 1868
-[09-Jan-2017 14:07:53 Europe/London] PHP Fatal error:  Call to undefined function __() in /home/rjrstudi/public_html/wp-admin/menu.php on line 23

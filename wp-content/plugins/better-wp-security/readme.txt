@@ -1,10 +1,10 @@
 === iThemes Security (formerly Better WP Security) ===
-Contributors: ithemes, chrisjean, gerroald, mattdanner, timothyblynjacobs
-Tags: security, security plugin, malware, hack, secure, block, SSL, admin, htaccess, lockdown, login, protect, protection, anti virus, attack, injection, login security, maintenance, permissions, prevention, authentication, administration, password, brute force, ban, permissions, bots, user agents, xml rpc, security log
-Requires at least: 4.7
-Tested up to: 4.9.8
-Stable tag: 7.2.0
-Requires PHP: 5.2
+Contributors: ithemes, chrisjean, mattdanner, timothyblynjacobs
+Tags: security plugin, malware scanner, login security, malware prevention, hack prevention, brute force protection, anti-virus, secure, password protection, ban, bad bots, audit log
+Requires at least: 5.4
+Tested up to: 5.6
+Stable tag: 7.9.0
+Requires PHP: 5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,9 +43,9 @@ Pro Features:
 * wp-cli Integration - Manage your site's security from the command line.
 
 
-= iThemes Sync Integration =
+= iThemes Sync Pro Integration =
 
-Manage more than one WordPress site? Manage Away Mode, release lockouts and keep your themes, plugins and WordPress core up to date from one dashboard with iThemes Sync. <a href="http://ithemes.com/sync/">Start managing 10 WordPress sites for free with iThemes Sync</a>.
+Manage more than one WordPress site? Manage Away Mode, release lockouts and keep your themes, plugins and WordPress core up to date from one dashboard with iThemes Sync Pro. <a href="https://ithemes.com/sync/">Start your free trial of Themes Sync Pro</a>.
 
 = iThemes Brute Force Attack Protection Network =
 
@@ -188,6 +188,125 @@ Free support may be available with the help of the community in the <a href="htt
 5. Free malware scan powered by Sucuri SiteCheck.
 
 == Changelog ==
+
+= 7.9.0 =
+* Important: iThemes Security requires WordPress 5.4 or later.
+* Enhancement: Add a setting for configuring the number of bans added to the server config files (.htaccess/nginx.conf).
+* Enhancement: Store the time a ban was added, and the lockout module responsible for the ban.
+* Enhancement: Overwrite Restrict Content Pro's detected IP address with the IP detected by iThemes Security.
+* Tweak: Disable SSL verification when performing the Security Check Loopback test. Some hosts can't properly verify loopback requests. This verification is unnecessary in this circumstance, and disabling SSL verification aligns iThemes Security with default WordPress loopback behavior.
+* Bug Fix: PHP warnings when invalid entries are stored in the WordPress Cron storage.
+* Bug Fix: Update the list of tables added to wpdb.
+* Bug Fix: Remove default value for text columns. This caused an issue on MySQL 8 and is unnecessary.
+* Bug Fix: Missing borders in the sidebar widgets on WordPress 5.5.
+* Bug Fix: Notice actions didn't trigger when "Hide Admin Bar" is enabled.
+* Bug Fix: Some users would be force to choose a strong password twice in a row.
+* Bug Fix: Warning when saving the Ban Users module outside of the Settings Page without passing the legacy host_list setting.
+* Bug Fix: Passwords Requirements compatibility with Restrict Content Pro.
+* Bug Fix: PHP warnings that may occur when initializing default user groups on a new installation.
+
+= 7.8.0 =
+* New Feature: The new, improved WordPress Security Site Scan powered by iThemes checks if Google has detected malware and added your site to their threat list.
+* Enhancement: Remove quick bans. Persist banned hosts to .htaccess or nginx.conf on an hourly schedule.
+* Tweak: Cap banned hosts persisted to .htaccess or nginx.conf to the most recent 100. This number can be adjusted with the "itsec_ban_users_max_hosts_for_server_config" filter. Older banned hosts will be locked out after WordPress loads.
+* Tweak: Ensure randomly generated passwords are considered strong by the Strong Passwords library.
+* Tweak: Suggest a 32 character password when forcing a password change.
+* Tweak: Change insensitive language to be more inclusive.
+* Bug Fix: PHP warning when a user's email address is updated outside of the user edit admin page.
+* Bug Fix: Fix login interstitials on WP Engine when using a front-end login form.
+* Bug Fix: PHP warning when checking opaque tokens.
+* Bug Fix: PHP warning after successfully connecting a site to iThemes Sync via the login connection flow.
+* Bug Fix: File Change Security Message would not appear for new installs.
+
+= 7.7.1 =
+* Bug Fix: PHP warning when evaluating password requirements.
+
+= 7.7.0 =
+* Important: iThemes Security requires PHP 5.6 or greater and WordPress 5.2 or greater.
+* New Feature: Save Time Securing WordPress With User Groups!
+* New Feature: Simplified connection flow when setting up iThemes Sync.
+* Enhancement: Add a warning if a WordPress Salt is set to an invalid value.
+* Enhancement: Include child log items in the logs list table. These are helpful for debugging issues.
+* Enhancement: Improve performance of the logs page on sites with large number of log items.
+* Enhancement: Check tables exist after completing a DB upgrade.
+* Tweak: When logging $_SERVER, only log a snapshot of available properties.
+* Bug Fix: The "Mulisite Tweaks -> Hide Updates" setting prevented auto-updates from running with WP Cron.
+* Bug Fix: Backup event was not added when the WP Cron Scheduler was reset manually.
+* Bug Fix: Admin Notices Popover was not being hidden when clicking outside the Popover on WP 5.3.
+* Bug Fix: New Password Requirements for already created accounts were not enforced until the second login.
+* Bug Fix: Update admin notices styling to be compatible with WordPress 5.4.
+* Bug Fix: Periodically clear expired opaque tokens.
+* Bug Fix: Don't block registration page when "wp-signup.php" is the Hide Backend register slug.
+* Bug Fix: Users with weak passwords would not be forced to change their password if the strong password requirement had been enabled after their password strength was checked.
+* Bug Fix: Remove "get_magic_quotes()" call that existed for backwards compatibility with PHP versions 5.3 and earlier. This function call was causing a warning on PHP 7.4.
+* Bug Fix: Warning when loading the settings page on PHP 7.4.
+* Bug Fix: Warning when loading the debug page on PHP 7.4.
+
+= 7.6.1 =
+* Bug Fix: Properly notate that iThemes Security requires PHP 5.5 or greater.
+
+= 7.6.0 =
+* Breaking Change: iThemes Security requires PHP 5.5 or later.
+* New Feature: iThemes Security now includes Security Check Pro to automatically and correctly determine your visitors IP addresses. Enable this scan by running Security Check and opting in to Security Check Pro or activate the Security Check Pro module in Advanced Modules. H/t Jeremy Voisin
+* Enhancement: Run Security Check Pro IP Detection automatically once a day.
+* Enhancement: Manually re-run Security Check Pro IP Detection from the Global Settings page.
+
+= 7.5.0 =
+* Breaking Change: iThemes Security requires PHP 5.4 or later.
+* Enhancement: New Lockout Template screen.
+* Enhancement: Add confirmation button to Login Interstitial Async Actions when on a different device.
+* Enhancement: Add filter to "Lookup IP" link.
+* Developer Note: There were significant changes to the internals of the iThemes Security Lockout API in this release. If you are using the ITSEC_Lockout class directly, all the API functions will continue to work, but will emit deprecation notices when legacy behavior is being used. Please update any integrations.
+* Bug Fix: Brute Force module reporting invalid logins using an email address incorrectly.
+* Bug Fix: Improve lockout compatibility with caching plugins.
+* Bug Fix: Fix admin notice not being dismissed due to a REST API route that was more narrowly defined than necessary.
+* Bug Fix: Admin Notices list did not refresh after dismissing a notice.
+* Bug Fix: Strong Passwords zxcvbn Library was not evaluating penalty strings correctly.
+* Bug Fix: Fix PHP warning if there are multiple detected proxy headers.
+
+= 7.4.1 =
+* Enhancement: New iThemes Sync Verb support for File Change.
+* Tweak: Add additional information about the login attempt when calling the Network Brute Force API.
+* Bug Fix: Hide Backend Bypass.
+* Bug Fix: Strict Standards error during Sync request.
+* Bug Fix: wp_die() if a login interstitial session fails to be created instead of throwing a fatal error.
+
+= 7.4.0 =
+* New: iThemes Security Admin Notices are now conveniently located in the new Security Messages Menu. Check your notices in the Security menu on the WordPress Admin Bar.
+* Enhancement: Add Security Message when a Notification Center email fails to send.
+* Enhancement: Replace Trace IP with IP Tracker Online.
+* Tweak: Remove 'DELETE' method from "System Tweaks -> Filter Request Methods"
+
+= 7.3.3 =
+* Bug Fix: Hide backend bypass.
+
+= 7.3.2 =
+* Tweak: Allow the log description column to word break for URLs or other strings with no spaces.
+* Bug Fix: Hide Backend bypass on certain Apache configurations.
+* Bug Fix: Properly return error that occurs during a backup.
+* Bug Fix: Regex warning on PHP 7.3 in the File Change module.
+* Bug Fix: Resolve warning when a user is set to "No Role".
+
+= 7.3.1 =
+* Enhancement: When ITSEC_DISABLE_MODULES is set, prevent hide backend from running.
+* Bug Fix: Tabnapping: Apply noopener to links instead of using blankshield script when available to prevent new pop-up blocker behavior from killing the links.
+
+= 7.3.0 =
+* Enhancement: Add Per-Content SSL toggle to the upcoming Block Editor interface.
+* Enhancement: Add filter to the recipients list for email notifications: "itsec_notification_{$notification}_email_recipients" and "itsec_notification_email_recipients".
+* Enhancement: Add define "ITSEC_DISABLE_TEMP_WHITELIST" to disable the Temporary IP Whitelisting for logged-in administrators.
+* Enhancement: Improve redirecting after processing a login interstitial from a front-end login form.
+* Enhancement: Add loopback IP detection to Security Check.
+* Enhancement: Detect Server IPs in Security Check.
+* Tweak: Add additional safety checks when writing to system config files. This will log a "Critical Issue" when the writing of an empty or partial config file is detected and prevented.
+* Tweak: Improve File Change locking to help prevent failing scans on sites with inconsistent cron scheduling.
+* Tweak: Improve "System Tweaks – Suspicious Query Strings – SQLI" to reduce false positives.
+* Tweak: Improve "System Tweaks – Disable PHP" to block PHP files in apache configurations that serve files with a trailing dot.
+* Tweak: Remove "Seznam Bot" from HackRepair List as it isn't present in the latest version.
+* Bug Fix: Include Hide Backend token when emailing a password reset URL.
+* Bug Fix: Notification Center - Only send notifications to users with an exact role match of selected roles instead of a fuzzy match based on selected capabilities.
+* Bug Fix: Error when trying to edit reusable blocks with per-post SSL enabled.
+* Bug Fix: Resolve warnings on PHP 5.2.
 
 = 7.2.0 =
 * Enhancement: Allow for selecting the particular Proxy header a server is configured to use. Improve the language to indicate the importance of configuring this setting. H/t Filippo Cavallarin CEO at wearesegment.com
@@ -503,5 +622,5 @@ Free support may be available with the help of the community in the <a href="htt
 
 == Upgrade Notice ==
 
-= 7.2.0 =
-Version 7.2.0 contains important bug fixes and improvements. It is recommended for all users.
+= 7.9.0 =
+Version 7.9.0 contains new features and bug fixes. It is recommended for all users.

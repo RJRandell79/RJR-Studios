@@ -1,9 +1,10 @@
 <?php
 
-include_once dirname( __FILE__ ) . '/models/group.php';
-include_once dirname( __FILE__ ) . '/models/monitor.php';
-include_once dirname( __FILE__ ) . '/models/file-io.php';
-include_once dirname( __FILE__ ) . '/database/database.php';
+require_once __DIR__ . '/models/group.php';
+require_once __DIR__ . '/models/monitor.php';
+require_once __DIR__ . '/models/file-io.php';
+require_once __DIR__ . '/database/database.php';
+require_once __DIR__ . '/redirection-capabilities.php';
 
 define( 'RED_DEFAULT_PER_PAGE', 25 );
 define( 'RED_MAX_PER_PAGE', 200 );
@@ -13,7 +14,7 @@ class Redirection_Admin {
 	private $monitor;
 	private $fixit_failed = false;
 
-	static function init() {
+	public static function init() {
 		if ( is_null( self::$instance ) ) {
 			self::$instance = new Redirection_Admin();
 		}
@@ -21,21 +22,25 @@ class Redirection_Admin {
 		return self::$instance;
 	}
 
-	function __construct() {
-		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
-		add_action( 'admin_notices', array( $this, 'update_nag' ) );
-		add_action( 'plugin_action_links_' . basename( dirname( REDIRECTION_FILE ) ) . '/' . basename( REDIRECTION_FILE ), array( $this, 'plugin_settings' ), 10, 4 );
-		add_filter( 'plugin_row_meta', array( $this, 'plugin_row_meta' ), 10, 4 );
-		add_filter( 'redirection_save_options', array( $this, 'flush_schedule' ) );
-		add_filter( 'set-screen-option', array( $this, 'set_per_page' ), 10, 3 );
-		add_action( 'redirection_redirect_updated', array( $this, 'set_default_group' ), 10, 2 );
+	public function __construct() {
+		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
+		add_action( 'admin_notices', [ $this, 'update_nag' ] );
+		add_action( 'plugin_action_links_' . basename( dirname( REDIRECTION_FILE ) ) . '/' . basename( REDIRECTION_FILE ), [ $this, 'plugin_settings' ], 10, 4 );
+		add_filter( 'plugin_row_meta', [ $this, 'plugin_row_meta' ], 10, 4 );
+		add_filter( 'redirection_save_options', [ $this, 'flush_schedule' ] );
+		add_filter( 'set-screen-option', [ $this, 'set_per_page' ], 10, 3 );
+		add_filter( 'set_screen_option_redirection_log_per_page', function( $ignore, $option, $value ) {
+			return $value;
+		}, 10, 3 );
+		add_action( 'redirection_redirect_updated', [ $this, 'set_default_group' ], 10, 2 );
+		add_action( 'redirection_redirect_updated', [ $this, 'clear_cache' ], 10, 2 );
 
 		if ( defined( 'REDIRECTION_FLYING_SOLO' ) && REDIRECTION_FLYING_SOLO ) {
-			add_filter( 'script_loader_src', array( $this, 'flying_solo' ), 10, 2 );
+			add_filter( 'script_loader_src', [ $this, 'flying_solo' ], 10, 2 );
 		}
 
-		register_deactivation_hook( REDIRECTION_FILE, array( 'Redirection_Admin', 'plugin_deactivated' ) );
-		register_uninstall_hook( REDIRECTION_FILE, array( 'Redirection_Admin', 'plugin_uninstall' ) );
+		register_deactivation_hook( REDIRECTION_FILE, [ 'Redirection_Admin', 'plugin_deactivated' ] );
+		register_uninstall_hook( REDIRECTION_FILE, [ 'Redirection_Admin', 'plugin_uninstall' ] );
 
 		$this->monitor = new Red_Monitor( red_get_options() );
 		$this->run_hacks();
@@ -65,24 +70,70 @@ class Redirection_Admin {
 		} );
 	}
 
+	/**
+	 * Show the database upgrade nag
+	 *
+	 * @return void
+	 */
 	public function update_nag() {
+		$options = red_get_options();
+
+		// Is the site configured to upgrade automatically?
+		if ( $options['plugin_update'] === 'admin' ) {
+			$this->automatic_upgrade();
+			return;
+		}
+
+		// Can the user perform a manual database upgrade?
+		if ( ! Redirection_Capabilities::has_access( Redirection_Capabilities::CAP_OPTION_MANAGE ) ) {
+			return;
+		}
+
+		// Default manual update, with nag
 		$status = new Red_Database_Status();
 
 		$message = false;
 		if ( $status->needs_installing() ) {
 			/* translators: 1: URL to plugin page */
-			$message = sprintf( __( 'Please complete your <a href="%s">Redirection setup</a> to activate the plugin.' ), 'tools.php?page=' . basename( REDIRECTION_FILE ) );
+			$message = sprintf( __( 'Please complete your <a href="%s">Redirection setup</a> to activate the plugin.', 'redirection' ), esc_url( $this->get_plugin_url() ) );
 		} elseif ( $status->needs_updating() ) {
 			/* translators: 1: URL to plugin page, 2: current version, 3: target version */
-			$message = sprintf( __( 'Redirection\'s database needs to be updated - <a href="%1$1s">click to update from %2$2s to %3$3s</a>.' ), 'tools.php?page=' . basename( REDIRECTION_FILE ), $status->get_current_version(), REDIRECTION_DB_VERSION );
+			$message = sprintf( __( 'Redirection\'s database needs to be updated - <a href="%1$1s">click to update</a>.', 'redirection' ), esc_url( $this->get_plugin_url() ) );
 		}
 
 		if ( ! $message || strpos( Redirection_Request::get_request_url(), 'page=redirection.php' ) !== false ) {
 			return;
 		}
 
-		// Contains HTML
-		echo '<div class="update-nag">' . $message . '</div>';
+		// Known HTML and so isn't escaped
+		// phpcs:ignore
+		echo '<div class="update-nag notice notice-warning" style="width: 95%">' . $message . '</div>';
+	}
+
+	/**
+	 * Perform an automatic DB upgrade
+	 *
+	 * @return void
+	 */
+	private function automatic_upgrade() {
+		$loop = 0;
+		$status = new Red_Database_Status();
+		$database = new Red_Database();
+
+		// Loop until the DB is upgraded, or until a max is exceeded (just in case)
+		while ( $loop < 20 ) {
+			if ( ! $status->needs_updating() ) {
+				break;
+			}
+
+			$database->apply_upgrade( $status );
+
+			if ( $status->is_error() ) {
+				// If an error occurs then switch to 'prompt' mode and let the user deal with it.
+				red_set_options( [ 'plugin_update' => 'prompt' ] );
+				return;
+			}
+		}
 	}
 
 	// So it finally came to this... some plugins include their JS in all pages, whether they are needed or not. If there is an error
@@ -123,25 +174,26 @@ class Redirection_Admin {
 		return $options;
 	}
 
-	function set_per_page( $status, $option, $value ) {
+	public function set_per_page( $status, $option, $value ) {
 		if ( $option === 'redirection_log_per_page' ) {
-			return max( 1, min( intval( $value, 10 ), RED_MAX_PER_PAGE ) );
+			$value = max( 1, min( intval( $value, 10 ), RED_MAX_PER_PAGE ) );
+			return $value;
 		}
 
 		return $status;
 	}
 
-	function plugin_settings( $links ) {
+	public function plugin_settings( $links ) {
 		$status = new Red_Database_Status();
 		if ( $status->needs_updating() ) {
-			array_unshift( $links, '<a style="color: red" href="tools.php?page=' . basename( REDIRECTION_FILE ) . '&amp;sub=support">' . __( 'Upgrade Database', 'redirection' ) . '</a>' );
+			array_unshift( $links, '<a style="color: red" href="' . esc_url( $this->get_plugin_url() ) . '&amp;sub=support">' . __( 'Upgrade Database', 'redirection' ) . '</a>' );
 		}
 
-		array_unshift( $links, '<a href="tools.php?page=' . basename( REDIRECTION_FILE ) . '&amp;sub=options">' . __( 'Settings', 'redirection' ) . '</a>' );
+		array_unshift( $links, '<a href="' . esc_url( $this->get_plugin_url() ) . '&amp;sub=options">' . __( 'Settings', 'redirection' ) . '</a>' );
 		return $links;
 	}
 
-	function plugin_row_meta( $plugin_meta, $plugin_file, $plugin_data, $status ) {
+	public function plugin_row_meta( $plugin_meta, $plugin_file, $plugin_data, $status ) {
 		if ( $plugin_file === basename( dirname( REDIRECTION_FILE ) ) . '/' . basename( REDIRECTION_FILE ) ) {
 			$plugin_data['Description'] .= '<p>' . __( 'Please upgrade your database', 'redirection' ) . '</p>';
 		}
@@ -149,10 +201,29 @@ class Redirection_Admin {
 		return $plugin_meta;
 	}
 
-	function redirection_head() {
+	private function get_plugin_url() {
+		return admin_url( 'tools.php?page=' . basename( REDIRECTION_FILE ) );
+	}
+
+	private function get_first_available_page_url() {
+		$pages = Redirection_Capabilities::get_available_pages();
+
+		if ( count( $pages ) > 0 ) {
+			return $this->get_plugin_url() . ( $pages[0] === 'redirect' ? '' : '&sub=' . rawurlencode( $pages[0] ) );
+		}
+
+		return admin_url();
+	}
+
+	public function redirection_head() {
 		global $wp_version;
 
-		$this->check_rest_api();
+		// Does user have access to this page?
+		if ( $this->get_current_page() === false ) {
+			// Redirect to root plugin page
+			wp_safe_redirect( $this->get_first_available_page_url() );
+			die();
+		}
 
 		if ( isset( $_REQUEST['action'] ) && isset( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( $_REQUEST['_wpnonce'], 'wp_rest' ) ) {
 			if ( $_REQUEST['action'] === 'fixit' ) {
@@ -170,13 +241,14 @@ class Redirection_Admin {
 			'WordPress: ' . $wp_version . ' (' . ( is_multisite() ? 'multi' : 'single' ) . ')',
 			'PHP: ' . phpversion(),
 			'Browser: ' . Redirection_Request::get_user_agent(),
-			'JavaScript: ' . plugin_dir_url( REDIRECTION_FILE ) . 'redirection.js',
+			'JavaScript: ' . plugin_dir_url( REDIRECTION_FILE ) . 'redirection.js?ver=' . $build,
 			'REST API: ' . red_get_rest_api(),
 		);
 
 		$this->inject();
 
-		if ( in_array( $this->get_menu_page(), array( 'redirects', 'log', '404s', 'groups' ) ) ) {
+		// Add contextual help to some pages
+		if ( in_array( $this->get_current_page(), [ 'redirect', 'log', '404s', 'groups' ], true ) ) {
 			add_screen_option( 'per_page', array(
 				/* translators: maximum number of log entries */
 				'label' => sprintf( __( 'Log entries (%d max)', 'redirection' ), RED_MAX_PER_PAGE ),
@@ -193,22 +265,49 @@ class Redirection_Admin {
 
 		wp_enqueue_style( 'redirection', plugin_dir_url( REDIRECTION_FILE ) . 'redirection.css', array(), $build );
 
+		$is_new = false;
+
+		// phpcs:ignore
+		if ( isset( $_GET['page'] ) && $_GET['page'] === 'redirection.php' && strpos( REDIRECTION_VERSION, '-beta' ) === false ) {
+			$major_version = implode( '.', array_slice( explode( '.', REDIRECTION_VERSION ), 0, 2 ) );
+			$is_new = version_compare( $options['update_notice'], $major_version ) < 0;
+		}
+
 		$status = new Red_Database_Status();
+		$status->check_tables_exist();
+
+		$translations = $this->get_i18n_data();
+
 		wp_localize_script( 'redirection', 'Redirectioni10n', array(
-			'WP_API_root' => esc_url_raw( red_get_rest_api() ),
-			'WP_API_nonce' => wp_create_nonce( 'wp_rest' ),
+			'api' => [
+				'WP_API_root' => esc_url_raw( red_get_rest_api() ),
+				'WP_API_nonce' => wp_create_nonce( 'wp_rest' ),
+				'site_health' => admin_url( 'site-health.php' ),
+				'current' => $options['rest_api'],
+				'routes' => [
+					REDIRECTION_API_JSON => red_get_rest_api( REDIRECTION_API_JSON ),
+					REDIRECTION_API_JSON_INDEX => red_get_rest_api( REDIRECTION_API_JSON_INDEX ),
+					REDIRECTION_API_JSON_RELATIVE => red_get_rest_api( REDIRECTION_API_JSON_RELATIVE ),
+				],
+			],
 			'pluginBaseUrl' => plugins_url( '', REDIRECTION_FILE ),
-			'pluginRoot' => admin_url( 'tools.php?page=redirection.php' ),
+			'pluginRoot' => $this->get_plugin_url(),
 			'per_page' => $this->get_per_page(),
-			'locale' => $this->get_i18n_data(),
-			'localeSlug' => get_locale(),
-			'token' => $options['token'],
-			'autoGenerate' => $options['auto_target'],
+			'locale' => [
+				'translations' => $translations,
+				'localeSlug' => get_locale(),
+				'Plural-Forms' => isset( $translations['plural-forms'] ) ? $translations['plural-forms'] : 'nplurals=2; plural=n != 1;',
+			],
+			'settings' => $options,
 			'preload' => $preload,
 			'versions' => implode( "\n", $versions ),
 			'version' => REDIRECTION_VERSION,
-			'api_setting' => $options['rest_api'],
 			'database' => $status->get_json(),
+			'caps' => [
+				'pages' => Redirection_Capabilities::get_available_pages(),
+				'capabilities' => Redirection_Capabilities::get_all_capabilities(),
+			],
+			'update_notice' => $is_new ? $major_version : false,
 		) );
 
 		$this->add_help_tab();
@@ -219,7 +318,7 @@ class Redirection_Admin {
 		add_filter( 'ip-geo-block-admin', array( $this, 'ip_geo_block' ) );
 	}
 
-	/**
+	/*
 	 * This works around the IP Geo Block plugin being very aggressive and breaking Redirection
 	 */
 	public function ip_geo_block( $validate ) {
@@ -244,28 +343,9 @@ class Redirection_Admin {
 		return $validate;
 	}
 
-	public function check_rest_api() {
-		$options = red_get_options();
-
-		if ( $options['rest_api'] === false || ( defined( 'REDIRECTION_FORCE_UPDATE' ) && REDIRECTION_FORCE_UPDATE ) ) {
-			include_once dirname( REDIRECTION_FILE ) . '/models/fixer.php';
-
-			$fixer = new Red_Fixer();
-			$status = $fixer->get_rest_status();
-
-			if ( $status['status'] === 'problem' ) {
-				$fixer->fix_rest();
-			} elseif ( $options['rest_api'] === false ) {
-				red_set_options( array( 'rest_api' => 0 ) );
-			}
-
-			red_set_options( array( 'version' => REDIRECTION_VERSION ) );
-		}
-	}
-
 	private function run_fixit() {
-		if ( current_user_can( apply_filters( 'redirection_role', 'manage_options' ) ) ) {
-			include_once dirname( REDIRECTION_FILE ) . '/models/fixer.php';
+		if ( Redirection_Capabilities::has_access( Redirection_Capabilities::CAP_SUPPORT_MANAGE ) ) {
+			require_once dirname( REDIRECTION_FILE ) . '/models/fixer.php';
 
 			$fixer = new Red_Fixer();
 			$result = $fixer->fix( $fixer->get_status() );
@@ -277,21 +357,33 @@ class Redirection_Admin {
 	}
 
 	private function set_rest_api( $api ) {
-		if ( $api >= 0 && $api <= REDIRECTION_API_POST ) {
+		if ( $api >= 0 && $api <= REDIRECTION_API_JSON_RELATIVE ) {
 			red_set_options( array( 'rest_api' => intval( $api, 10 ) ) );
 		}
 	}
 
 	private function get_preload_data() {
-		if ( $this->get_menu_page() === 'support' ) {
-			$api = new Redirection_Api_Plugin( REDIRECTION_API_NAMESPACE );
+		$status = new Red_Database_Status();
+
+		if ( $status->needs_installing() ) {
+			include_once __DIR__ . '/models/importer.php';
+
+			return [
+				'importers' => Red_Plugin_Importer::get_plugins(),
+			];
+		}
+
+		if ( $this->get_current_page() === 'support' ) {
+			require_once dirname( REDIRECTION_FILE ) . '/models/fixer.php';
+
+			$fixer = new Red_Fixer();
 
 			return array(
-				'pluginStatus' => $api->route_status( new WP_REST_Request() ),
+				'pluginStatus' => $fixer->get_json(),
 			);
 		}
 
-		return array();
+		return [];
 	}
 
 	private function add_help_tab() {
@@ -324,10 +416,11 @@ class Redirection_Admin {
 		$i18n_json = dirname( REDIRECTION_FILE ) . '/locale/json/redirection-' . $locale . '.json';
 
 		if ( is_file( $i18n_json ) && is_readable( $i18n_json ) ) {
+			// phpcs:ignore
 			$locale_data = @file_get_contents( $i18n_json );
 
 			if ( $locale_data ) {
-				return json_decode( $locale_data );
+				return json_decode( $locale_data, true );
 			}
 		}
 
@@ -335,9 +428,9 @@ class Redirection_Admin {
 		return array();
 	}
 
-	function admin_menu() {
-		$hook = add_management_page( 'Redirection', 'Redirection', apply_filters( 'redirection_role', 'manage_options' ), basename( REDIRECTION_FILE ), array( &$this, 'admin_screen' ) );
-		add_action( 'load-' . $hook, array( $this, 'redirection_head' ) );
+	public function admin_menu() {
+		$hook = add_management_page( 'Redirection', 'Redirection', Redirection_Capabilities::get_plugin_access(), basename( REDIRECTION_FILE ), [ $this, 'admin_screen' ] );
+		add_action( 'load-' . $hook, [ $this, 'redirection_head' ] );
 	}
 
 	private function check_minimum_wp() {
@@ -350,11 +443,28 @@ class Redirection_Admin {
 		return true;
 	}
 
+	/**
+	 * Update the cache key when updating or creating a redirect
+	 *
+	 * @return void
+	 */
+	public function clear_cache() {
+		$settings = red_get_options();
+
+		if ( $settings['cache_key'] > 0 ) {
+			red_set_options( [ 'cache_key' => time() ] );
+		}
+	}
+
 	public function set_default_group( $id, $redirect ) {
 		red_set_options( array( 'last_group_id' => $redirect->get_group_id() ) );
 	}
 
 	public function admin_screen() {
+		if ( count( Redirection_Capabilities::get_all_capabilities() ) === 0 ) {
+			die( 'You do not have sufficient permissions to access this page.' );
+		}
+
 		if ( $this->check_minimum_wp() === false ) {
 			return $this->show_minimum_wordpress();
 		}
@@ -378,6 +488,8 @@ class Redirection_Admin {
 	}
 
 	private function show_minimum_wordpress() {
+		global $wp_version;
+
 		/* translators: 1: Expected WordPress version, 2: Actual WordPress version */
 		$wp_requirement = sprintf( __( 'Redirection requires WordPress v%1$1s, you are using v%2$2s - please update your WordPress', 'redirection' ), REDIRECTION_MIN_WP, $wp_version );
 		?>
@@ -395,7 +507,7 @@ class Redirection_Admin {
 		<p><?php esc_html_e( "This may be caused by another plugin - look at your browser's error console for more details.", 'redirection' ); ?></p>
 		<p><?php esc_html_e( 'If you are using a page caching plugin or service (CloudFlare, OVH, etc) then you can also try clearing that cache.', 'redirection' ); ?></p>
 		<p><?php _e( 'Also check if your browser is able to load <code>redirection.js</code>:', 'redirection' ); ?></p>
-		<p><code><?php echo esc_html( plugin_dir_url( REDIRECTION_FILE ) . 'redirection.js?ver=' . urlencode( REDIRECTION_VERSION ) . '-' . urlencode( REDIRECTION_BUILD ) ); ?></code></p>
+		<p><code><?php echo esc_html( plugin_dir_url( REDIRECTION_FILE ) . 'redirection.js?ver=' . rawurlencode( REDIRECTION_VERSION ) . '-' . rawurlencode( REDIRECTION_BUILD ) ); ?></code></p>
 		<p><?php esc_html_e( 'Please note that Redirection requires the WordPress REST API to be enabled. If you have disabled this then you won\'t be able to use Redirection', 'redirection' ); ?></p>
 		<p><?php _e( 'Please see the <a href="https://redirection.me/support/problems/">list of common problems</a>.', 'redirection' ); ?></p>
 		<p><?php esc_html_e( 'If you think Redirection is at fault then create an issue.', 'redirection' ); ?></p>
@@ -450,7 +562,7 @@ class Redirection_Admin {
 			document.querySelector( '.react-loading' ).style.display = 'none';
 			document.querySelector( '.react-error' ).style.display = 'block';
 
-			if ( typeof Redirectioni10n !== 'undefined' ) {
+			if ( typeof Redirectioni10n !== 'undefined' && Redirectioni10n ) {
 				document.querySelector( '.versions' ).innerHTML = Redirectioni10n.versions.replace( /\n/g, '<br />' );
 				document.querySelector( '.react-error .button-primary' ).href += '&body=' + encodeURIComponent( errorText ) + encodeURIComponent( Redirectioni10n.versions );
 			}
@@ -469,35 +581,54 @@ class Redirection_Admin {
 		<?php
 	}
 
-	private function user_has_access() {
-		return current_user_can( apply_filters( 'redirection_role', 'manage_options' ) );
+	/**
+	 * Get the current plugin page.
+	 * Uses $_GET['sub'] to determine the current page unless a page is supplied.
+	 *
+	 * @param string $page Current page.
+	 *
+	 * @return string|boolean Current page, or false.
+	 */
+	private function get_current_page( $page = false ) {
+		// $_GET['sub'] is validated below
+		// phpcs:ignore
+		if ( ! $page ) {
+			// phpcs:ignore
+			$page = isset( $_GET['sub'] ) ? $_GET['sub'] : 'redirect';
+		}
+
+		// Are we allowed to access this page?
+		if ( in_array( $page, Redirection_Capabilities::get_available_pages(), true ) ) {
+			// phpcs:ignore
+			return $page;
+		}
+
+		return false;
 	}
 
 	private function inject() {
-		if ( isset( $_GET['page'] ) && $this->get_menu_page() !== 'redirects' && $_GET['page'] === 'redirection.php' ) {
+		// phpcs:ignore
+		if ( isset( $_GET['page'] ) && $this->get_current_page() !== 'redirect' && $_GET['page'] === 'redirection.php' ) {
 			$this->try_export_logs();
 			$this->try_export_redirects();
 			$this->try_export_rss();
 		}
 	}
 
-	private function get_menu_page() {
-		if ( isset( $_GET['sub'] ) && in_array( $_GET['sub'], array( 'group', '404s', 'log', 'io', 'options', 'support', true ) ) ) {
-			return $_GET['sub'];
-		}
-
-		return 'redirects';
-	}
-
 	public function try_export_rss() {
-		if ( isset( $_GET['token'] ) && $this->get_menu_page() === 'rss' ) {
+		// phpcs:ignore
+		if ( isset( $_GET['token'] ) && isset( $_GET['sub'] ) && $_GET['sub'] === 'rss' && Redirection_Capabilities::has_access( Redirection_Capabilities::CAP_REDIRECT_MANAGE ) ) {
 			$options = red_get_options();
 
+			// phpcs:ignore
 			if ( $_GET['token'] === $options['token'] && ! empty( $options['token'] ) ) {
-				$items = Red_Item::get_all_for_module( intval( $_GET['module'] ) );
+				// phpcs:ignore
+				$items = Red_Item::get_all_for_module( intval( $_GET['module'], 10 ) );
 
 				$exporter = Red_FileIO::create( 'rss' );
 				$exporter->force_download();
+
+				// phpcs:ignore
 				echo $exporter->get_data( $items, array() );
 				die();
 			}
@@ -505,11 +636,11 @@ class Redirection_Admin {
 	}
 
 	private function try_export_logs() {
-		if ( $this->user_has_access() && isset( $_POST['export-csv'] ) && check_admin_referer( 'wp_rest' ) ) {
-			if ( $this->get_menu_page() === 'log' ) {
-				RE_Log::export_to_csv();
-			} else {
-				RE_404::export_to_csv();
+		if ( Redirection_Capabilities::has_access( Redirection_Capabilities::CAP_IO_MANAGE ) && isset( $_POST['export-csv'] ) && check_admin_referer( 'wp_rest' ) ) {
+			if ( $this->get_current_page() === 'log' ) {
+				Red_Redirect_Log::export_to_csv();
+			} elseif ( $this->get_current_page() === '404s' ) {
+				Red_404_Log::export_to_csv();
 			}
 
 			die();
@@ -517,11 +648,18 @@ class Redirection_Admin {
 	}
 
 	private function try_export_redirects() {
-		if ( $this->user_has_access() && $_GET['sub'] === 'io' && isset( $_GET['exporter'] ) && isset( $_GET['export'] ) && check_admin_referer( 'wp_rest' ) ) {
+		// phpcs:ignore
+		if ( ! isset( $_GET['sub'] ) || $_GET['sub'] !== 'io' ) {
+			return;
+		}
+
+		if ( Redirection_Capabilities::has_access( Redirection_Capabilities::CAP_IO_MANAGE ) && isset( $_GET['exporter'] ) && isset( $_GET['export'] ) && check_admin_referer( 'wp_rest' ) ) {
 			$export = Red_FileIO::export( $_GET['export'], $_GET['exporter'] );
 
 			if ( $export !== false ) {
 				$export['exporter']->force_download();
+
+				// phpcs:ignore
 				echo $export['data'];
 				die();
 			}
@@ -532,3 +670,14 @@ class Redirection_Admin {
 register_activation_hook( REDIRECTION_FILE, array( 'Redirection_Admin', 'plugin_activated' ) );
 
 add_action( 'init', array( 'Redirection_Admin', 'init' ) );
+
+// This is causing a lot of problems with the REST API - disable qTranslate
+add_filter( 'qtranslate_language_detect_redirect', function( $lang, $url ) {
+	$url = Redirection_Request::get_request_url();
+
+	if ( strpos( $url, '/wp-json/' ) !== false || strpos( $url, '?rest_route' ) !== false ) {
+		return false;
+	}
+
+	return $lang;
+}, 10, 2 );

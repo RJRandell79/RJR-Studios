@@ -348,11 +348,21 @@ final class ITSEC_Logs_Page {
 				}
 
 				$details = wp_list_sort( $details, 'order', 'ASC', true );
+				$messages = ITSEC_Lib_Remote_Messages::get_messages_for_placement( array( 'logs' => array( 'module' => $entry['module'], 'code' => $entry['code'] ) ) );
 			}
 
 			ob_start();
 
 ?>
+	<?php if ( $messages ) : ?>
+		<div class="itsec-logs-service-status">
+			<?php foreach ( $messages as $message ): ?>
+				<div class="notice notice-alt notice-<?php echo esc_attr( $message['type'] ); ?> below-h2">
+					<p><?php echo $message['message']; ?></p>
+				</div>
+			<?php endforeach; ?>
+		</div>
+	<?php endif; ?>
 	<table class="form-table">
 		<?php foreach ( $details as $row ) : ?>
 			<tr>
@@ -515,7 +525,9 @@ final class ITSEC_Logs_Page {
 							<?php $form->add_nonce( 'itsec-logs-page' ); ?>
 							<?php $form->add_hidden( 'widget-id', $id ); ?>
 							<div id="itsec-sidebar-widget-<?php echo $id; ?>" class="postbox itsec-sidebar-widget">
-								<h3 class="hndle ui-sortable-handle"><span><?php echo esc_html( $widget->title ); ?></span></h3>
+								<div class="postbox-header">
+									<h2 class="hndle ui-sortable-handle"><span><?php echo esc_html( $widget->title ); ?></span></h2>
+								</div>
 								<div class="inside">
 									<?php $this->get_widget_settings( $id, $form, true ); ?>
 								</div>

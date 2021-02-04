@@ -247,8 +247,13 @@ function get_images( $postid ) {
     $img_src = wp_get_attachment_image_src( $img_id, 'full' );
     $img_srcset = wp_get_attachment_image_srcset( $img_id, 'full' );
     $img_alt = get_post_meta( $img_id, '_wp_attachment_image_alt', true );
+    $img_caption = wp_get_attachment_caption( $img_id );
 
-    return array( esc_url( $img_src[ 0 ] ), esc_attr( $img_srcset ), $img_alt );
+    if( !$img_caption ) {
+        $img_caption = '';
+    }
+
+    return array( esc_url( $img_src[ 0 ] ), esc_attr( $img_srcset ), $img_alt, $img_caption );
 }
 
 function international_number_link( $number, $country = 'uk' ) { // Adds international dialling prefix for GB unless country value is overidden

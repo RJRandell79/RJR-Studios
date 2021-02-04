@@ -46,7 +46,7 @@ final class ITSEC_Mail {
 			$callout = $this->get_template( 'pro-callout.html' );
 
 			$replacements = array(
-				'two_factor' => esc_html__( 'Want two-factor authentication, scheduled malware scanning, ticketed support and more?', 'better-wp-security' ),
+				'two_factor' => esc_html__( 'Want two-factor authentication, scheduled site scanning, ticketed support and more?', 'better-wp-security' ),
 				'get_pro'    => esc_html__( 'Get iThemes Security Pro', 'better-wp-security' ),
 				'why_pro'    => sprintf( wp_kses( __( 'Why go Pro? <a href="%s">Check out the Free/Pro comparison chart.</a>', 'better-wp-security' ), array( 'a' => array( 'href' => array() ) ) ), esc_url( 'https://ithemes.com/security/why-go-pro/' ) ),
 			);
@@ -169,6 +169,17 @@ final class ITSEC_Mail {
 		return $module;
 	}
 
+	public function add_small_code( $content ) {
+		$this->add_html( $this->get_small_code( $content ) );
+	}
+
+	public function get_small_code( $content ) {
+		$module = $this->get_template( 'small-code.html' );
+		$module = $this->replace( $module, 'content', $content );
+
+		return $module;
+	}
+
 	public function add_section_heading( $content, $icon_type = false ) {
 		$this->add_html( $this->get_section_heading( $content, $icon_type ) );
 	}
@@ -236,6 +247,23 @@ final class ITSEC_Mail {
 		return $module;
 	}
 
+	public function add_large_button( $link_text, $href, $style = 'default' ) {
+		$this->add_html( $this->get_large_button( $link_text, $href, $style ) );
+	}
+
+	public function get_large_button( $link_text, $href, $style = 'default' ) {
+
+		$module = $this->get_template( 'large-button.html' );
+		$module = $this->replace_all( $module, array(
+			'href'      => $href,
+			'link_text' => $link_text,
+			'bk_color'  => 'blue' === $style ? '#0085E0' : '#FFCD08',
+			'txt_color' => 'blue' === $style ? '#FFFFFF' : '#2E280E',
+		) );
+
+		return $module;
+	}
+
 	public function add_lockouts_table( $lockouts ) {
 		$entry   = $this->get_template( 'lockouts-entry.html' );
 		$entries = '';
@@ -244,6 +272,9 @@ final class ITSEC_Mail {
 			if ( 'user' === $lockout['type'] ) {
 				/* translators: 1: Username */
 				$lockout['description'] = sprintf( wp_kses( __( '<b>User:</b> %1$s', 'better-wp-security' ), array( 'b' => array() ) ), $lockout['id'] );
+			} elseif ( 'username' === $lockout['type'] ) {
+				/* translators: 1: Username */
+				$lockout['description'] = sprintf( wp_kses( __( '<b>Username:</b> %1$s', 'better-wp-security' ), array( 'b' => array() ) ), $lockout['id'] );
 			} else {
 				/* translators: 1: Hostname */
 				$lockout['description'] = sprintf( wp_kses( __( '<b>Host:</b> %1$s', 'better-wp-security' ), array( 'b' => array() ) ), $lockout['id'] );
@@ -310,7 +341,7 @@ final class ITSEC_Mail {
 				$style .= 'padding:5px 10px;';
 			}
 
-			$html .= '<th style="' . $style .'">';
+			$html .= '<th style="' . $style . '">';
 			$html .= $header;
 			$html .= '</th>';
 		}
@@ -393,14 +424,20 @@ final class ITSEC_Mail {
 	/**
 	 * Add an image to the email.
 	 *
-	 * @param string $src   URL of the image.
-	 * @param int    $width Max width of the image in pixels.
+	 * @param string $src_or_name URL of the image or the name of the mail image.
+	 * @param int    $width       Max width of the image in pixels.
 	 */
-	public function add_image( $src, $width ) {
-		$this->add_html( $this->get_image( $src, $width ) );
+	public function add_image( $src_or_name, $width ) {
+		$this->add_html( $this->get_image( $src_or_name, $width ) );
 	}
 
-	public function get_image( $src, $width ) {
+	public function get_image( $src_or_name, $width ) {
+		if ( false === strpos( $src_or_name, '.' ) ) {
+			$src = $this->get_image_url( $src_or_name );
+		} else {
+			$src = $src_or_name;
+		}
+
 		$module = $this->get_template( 'image.html' );
 		$module = $this->replace_all( $module, array(
 			'src'   => $src,
@@ -439,6 +476,14 @@ final class ITSEC_Mail {
 		$this->deferred      = '';
 
 		$this->add_html( $deferred, $group );
+	}
+
+	public function insert_before( $identifier, $html ) {
+		$this->groups = ITSEC_Lib::array_insert_before( $identifier, $this->groups, count( $this->groups ), $html );
+	}
+
+	public function insert_after( $identifier, $html ) {
+		$this->groups = ITSEC_Lib::array_insert_after( $identifier, $this->groups, count( $this->groups ), $html );
 	}
 
 	/**

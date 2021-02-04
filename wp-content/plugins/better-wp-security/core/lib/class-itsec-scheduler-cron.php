@@ -117,7 +117,7 @@ class ITSEC_Scheduler_Cron extends ITSEC_Scheduler {
 		$now = $now ? $now : ITSEC_Core::get_current_time_gmt();
 
 		foreach ( $crons as $timestamp => $hooks ) {
-			if ( $timestamp > $now || ! isset( $hooks[ self::HOOK ] ) ) {
+			if ( ! is_array( $hooks ) || $timestamp > $now || ! isset( $hooks[ self::HOOK ] ) ) {
 				continue;
 			}
 
@@ -277,7 +277,7 @@ class ITSEC_Scheduler_Cron extends ITSEC_Scheduler {
 		$found = false;
 
 		foreach ( $crons as $timestamp => $hooks ) {
-			if ( isset( $hooks[ self::HOOK ][ $hash ] ) ) {
+			if ( is_array( $hooks ) && isset( $hooks[ self::HOOK ][ $hash ] ) ) {
 				$found = true;
 				unset( $crons[ $timestamp ][ self::HOOK ][ $hash ] );
 				break;
@@ -457,10 +457,16 @@ class ITSEC_Scheduler_Cron extends ITSEC_Scheduler {
 	}
 
 	public function uninstall() {
+		remove_action( self::HOOK, array( $this, 'process' ) );
+		remove_filter( 'cron_schedules', array( $this, 'register_cron_schedules' ) );
 
 		$crons = _get_cron_array();
 
 		foreach ( $crons as $timestamp => $args ) {
+			if ( ! is_array( $args ) ) {
+				continue;
+			}
+
 			unset( $crons[ $timestamp ][ self::HOOK ] );
 
 			if ( empty( $crons[ $timestamp ] ) ) {

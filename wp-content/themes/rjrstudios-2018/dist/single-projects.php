@@ -77,7 +77,7 @@
 								<?php endif; ?>
 								<?php if( $weblink ) : ?>
 								<li><div><span></span><div></div></div>
-									<span>Website Link: </span><a class="link" href="<?php echo $weblink; ?>" title="See website"><?php echo $weblink; ?></a>
+									<span>Website Link: </span><a target="_blank" class="link" href="<?php echo $weblink; ?>" title="See website"><?php echo $weblink; ?></a>
 								</li>
 								<?php endif; ?>
 							</ul>
