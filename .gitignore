@@ -108,3 +108,4 @@ wp-content/mu-plugins/local-by-flywheel-demo-urls.php
 flywheel-local_prep.sh
 rjrstudios-latest-tweet.json
 wp-admin/rjrstudios-latest-tweet.json
+!wp-content/themes/rjrstudios-2018/package.json
