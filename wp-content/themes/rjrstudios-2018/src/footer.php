@@ -13,7 +13,9 @@
 	<?php wp_footer(); ?>
 
     <?php if ($analytics && $_SERVER['SERVER_NAME'] != 'rjrstudios.local'):
-        echo $analytics;
+        echo $analytics; ?>
+	<script>document.addEventListener( 'wpcf7mailsent', function( event ) { ga('send', 'event', 'Contact', 'Submission'); }, false );</script>
+    <?php
     endif; ?>
 
 </footer>
